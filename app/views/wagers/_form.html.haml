@@ -1,0 +1,33 @@
+= simple_form_for(@wager, url: stream_wagers_path) do |f|
+  = f.error_notification
+
+  .row
+    .col-md-3
+      .form-inputs
+        = f.association :game, label_method: :name
+        = f.input :min_amount, as: :numeric
+        = f.input :max_amount, as: :numeric
+
+        = f.input :question, required: true
+
+    .col-md-9
+      %h3 Options
+      = link_to_add_association f, :wager_options, data: {'association-insertion-node' => '#options', 'association-insertion-position' => 'append'} do
+        %i.fa.fa-plus
+      
+
+      #options
+        = f.simple_fields_for :wager_options do |option|
+          = render 'wager_options_fields', f: option
+
+  .row
+    .col-md-12.form-actions
+      = f.button :submit
+
+  :javascript
+    $(function () {
+      $("select#wager_game_id").on('change', function() {
+      });
+    });
+
+

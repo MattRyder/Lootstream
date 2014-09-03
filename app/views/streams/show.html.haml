@@ -1,0 +1,7 @@
+.row
+  .col-md-6.col-md-offset-3
+    = render 'bet_field', wager: @wager if @wager
+
+.row
+  .col-md-8
+    /= render 'flash_player', channel: params[:id]

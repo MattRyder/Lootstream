@@ -1,0 +1,11 @@
+.wager{class: "wager-#{wager.game.name}" }
+  .row
+    %h2.title= wager.question
+    .input-group
+      %span.input-group-addon $
+      %input.form-control#amount{type: 'number', placeholder: 'Amount to bet'}
+        
+
+  .row.options
+    - wager.wager_options.each do |option|
+      .btn.btn-default= link_to option.text, '#', class: 'option', name: option.id, remote: true

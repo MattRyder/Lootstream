@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @game.name
+%p
+  %b Max options:
+  = @game.max_options
+
+= link_to 'Edit', edit_game_path(@game)
+\|
+= link_to 'Back', games_path

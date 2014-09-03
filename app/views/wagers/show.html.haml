@@ -1,0 +1,39 @@
+%p
+  %b Game:
+  = @wager.game.name
+%p
+  %b Question:
+  = @wager.question
+%p
+  %b Min amount:
+  = @wager.min_amount
+%p
+  %b Max amount:
+  = @wager.max_amount
+
+%h3 Transactions
+- @summary.each do |tr|
+  .row{'data-dist-id' => "#{tr[:option].id}"}
+    %p.col-xs-3= tr[:option][:text]
+    %p.col-xs-3= "Bets Placed: #{tr[:count]}"
+    %p.col-xs-3= "Total Bet: #{number_to_currency(tr[:total_amount], unit: '$')}"
+    .col-xs-3= link_to "Set as Winner", '#', class: 'btn btn-default', remote: true
+
+:javascript
+  $('.btn').click(function() {
+    var sel_opt = $(this).parents('.row').data('dist-id');
+    $.ajax({
+      url: '/distribute_winnings',
+      type: 'POST',
+      data: {'selected_option' : sel_opt }
+    }).complete(function(data) {
+      console.log(data);
+    });
+    return false;
+  });
+
+= link_to 'Edit', edit_wager_path(@wager)
+\|
+= link_to 'Back', stream_wagers_path(@wager.stream)
+
+

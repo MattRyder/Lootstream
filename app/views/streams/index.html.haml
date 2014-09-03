@@ -1,0 +1,5 @@
+- @streams.each do |stream|
+  .row
+    .col-xs-4= link_to image_tag(stream[:preview]['small']), stream_path(stream[:name])
+    .col-xs-4= link_to stream[:status], stream_path(stream[:name])
+    .col-xs-4= stream[:display_name]
