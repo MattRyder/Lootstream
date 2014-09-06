@@ -5,8 +5,10 @@ class Game < ActiveRecord::Base
     # Redeposit, win + original bet, to be recredited:
     redeposit_amounts = {}
     # get losing option
-    losing_option = wager.wager_options.where(
-      "id IS NOT ?", winning_option.id).first
+    losing_option = wager.wager_options.where
+                    .not(id: winning_option.id).first
+
+                    byebug
 
     return if losing_option.transactions.empty? || winning_option.transactions.empty?
 
