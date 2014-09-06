@@ -8,8 +8,6 @@ class Game < ActiveRecord::Base
     losing_option = wager.wager_options.where
                     .not(id: winning_option.id).first
 
-                    byebug
-
     return if losing_option.transactions.empty? || winning_option.transactions.empty?
 
     win_total = winning_option.transactions.map(&:amount).reduce(:+)
