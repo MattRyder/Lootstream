@@ -6,7 +6,8 @@ gem 'haml-rails'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'font-awesome-rails'
 
-gem 'sqlite3'
+gem 'sqlite3', group: :development
+gem 'pg', group: :production
 
 gem 'sass-rails',     '~> 4.0.3'
 gem 'uglifier',       '>= 1.3.0'
