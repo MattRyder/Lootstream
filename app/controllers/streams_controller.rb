@@ -24,6 +24,11 @@ class StreamsController < ApplicationController
       @stream = Stream.find_or_create_by!(name: params[:id])
       @balance = current_user.stream_balance(@stream)
       @wager = Wager.find_by(stream: @stream, active: true)
+
+      if @wager
+        opt_ids = @wager.wager_options.map(&:id)
+        @transaction = Transaction.find_by(user_id: current_user, wager_option_id: opt_ids)
+      end
     end
   end
 end

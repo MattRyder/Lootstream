@@ -17,8 +17,7 @@ class Wager < ActiveRecord::Base
   def total_amount_bet
     total_amount = 0
     self.wager_options.each do |wo|
-      wo_trans = Transaction.where(wager_option_id: wo)
-      total_amount += wo_trans.map(&:amount).reduce(:+) if wo_trans.count > 0
+      total_amount +=  wo.amount_bet
     end
     total_amount
   end
@@ -30,12 +29,11 @@ class Wager < ActiveRecord::Base
     self.wager_options.each do |wo|
       option_data = {}
 
-      wo_transactions = Transaction.where(wager_option_id: wo)
       transactions << {
         option: wo,
-        transactions: wo_transactions,
-        total_amount: wo_transactions.map(&:amount).reduce(:+),
-        count: wo_transactions.count
+        transactions: wo.transactions,
+        total_amount: wo.amount_bet,
+        count: wo.transactions.count
       }
     end
     transactions

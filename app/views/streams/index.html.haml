@@ -3,5 +3,5 @@
     -stream_group.each do |stream|
       .col-xs-5.col-xs-offset-1.stream
         .row= link_to image_tag(stream[:preview]['medium']), stream_path(stream[:name]), class: 'img-responsive'
-        .row= link_to stream[:status], stream_path(stream[:name])
-        .row= stream[:display_name]
+        %h3.row= link_to stream[:name], stream_path(stream[:name])
+        %p.row= stream[:status]

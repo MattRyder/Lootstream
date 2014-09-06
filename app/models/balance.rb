@@ -4,6 +4,6 @@ class Balance < ActiveRecord::Base
 
   def change(amount)
     self.balance = self.balance + amount
-    self.save!
+    self.save
   end
 end

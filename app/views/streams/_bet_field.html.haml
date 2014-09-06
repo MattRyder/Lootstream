@@ -1,11 +1,16 @@
 .wager{class: "wager-#{wager.game.name}" }
   .row
     %h2.title= wager.question
+  .row
     .input-group.col-xs-6.col-xs-offset-3
       %span.input-group-addon $
-      %input.form-control#amount{type: 'number', placeholder: 'Amount to bet'}
+      %input.form-control#amount{type: 'number', placeholder: 'Amount to bet', value: "#{@transaction.amount if @transaction}", disabled: (@transaction ? 'disabled' : nil)}
         
-
-    .options.col-xs-5.col-xs-offset-4
-      - wager.wager_options.each do |option|
-        .btn.btn-default= link_to option.text, '#', class: 'option', name: option.id, remote: true
+  .row.text-center.options
+    - wager.wager_options.each do |option|
+      .col-xs-6
+        .btn.btn-default{ class: "#{'btn-success' if @transaction && @transaction.wager_option_id == option.id}", disabled: (@transaction ? 'disabled' : nil)}
+          = link_to option.text, '#', class: 'option', name: option.id, remote: true
+        %h4
+          %span.label.label-info
+            = odds(option)
