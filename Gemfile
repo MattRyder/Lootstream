@@ -7,7 +7,6 @@ gem 'bootstrap-sass', '~> 3.2.0'
 gem 'font-awesome-rails'
 
 gem 'sqlite3', group: :development
-gem 'pg', group: :production
 
 gem 'sass-rails',     '~> 4.0.3'
 gem 'uglifier',       '>= 1.3.0'
@@ -25,3 +24,8 @@ gem 'friendly_id'
 gem 'thin'
 gem 'byebug',        group: :development
 gem 'spring',        group: :development
+
+group :production do
+  gem 'pg'
+  gem 'rails_12factor'
+end
