@@ -6,3 +6,21 @@
 .row
   .col-md-8.col-md-offset-2
     = render 'flash_player', channel: params[:id]
+
+  :javascript
+    $(function() {
+      var source = new EventSource("/wagers/#{@wager.id if @wager}/realtime");
+      source.onmessage = function (e) {
+      };
+      source.onerror = function (e) {
+      };
+      source.addEventListener("client_update", function(e) {
+        var data = JSON.parse(e.data);
+        for(var i = 0; i < data.length; i++) {
+          var lbl = $(".option-"+data[i].id).find('.label');
+          if(lbl)
+            lbl.html(data[i].value);
+        }
+      }, false);
+
+    });

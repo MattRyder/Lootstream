@@ -2,6 +2,10 @@ class WagersController < ApplicationController
   before_action :set_wager, only: [:show, :edit, :update, :destroy]
   before_action :get_stream, only: [:index, :create]
 
+  helper_method :calculate_odds
+
+  include ActionController::Live
+
   # GET /wagers
   # GET /wagers.json
   def index
@@ -64,6 +68,23 @@ class WagersController < ApplicationController
     end
   end
 
+  def process_realtime(action = 'show')
+    @wager = Wager.find(params[:wager_id])
+    response.headers['Content-Type'] = 'text/event-stream'
+
+    if @wager
+      odds_data = []
+      @wager.wager_options.each do |option|
+        odds_data << { id: option.id, value: option.calculate_odds }
+      end
+    end
+
+    response.stream.write "event: client_update\n"
+    response.stream.write "retry: 5500\n"
+    response.stream.write "data: #{odds_data.to_json} \n\n"
+    response.stream.close
+  end
+
   # GET /wagers/1
   # GET /wagers/1.json
   def show
@@ -113,9 +134,9 @@ class WagersController < ApplicationController
   # DELETE /wagers/1
   # DELETE /wagers/1.json
   def destroy
-    @wager.destroy
+    @wager.suspend
     respond_to do |format|
-      format.html { redirect_to wagers_url, notice: 'Wager was successfully destroyed.' }
+      format.html { redirect_to stream_url(@wager.stream), notice: 'Wager was successfully suspended.' }
       format.json { head :no_content }
     end
   end

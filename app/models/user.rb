@@ -9,14 +9,15 @@ class User < ActiveRecord::Base
   has_many :transactions
 
   # Validation
-  validates_presence_of :access_token
+  #validates_presence_of :access_token
 
   validates_format_of :email, :with  => Devise.email_regexp,
     :if => :email_changed?
 
   def stream_balance(stream)
-    balance = self.balances.find_or_create_by(stream: stream) do |s|
-      s.balance = 100
-    end
+    balance = self.balances.find_by(stream: stream)
+    balance = self.balances.create!(stream: stream, balance: 100) unless balance
+
+    return balance
   end
 end

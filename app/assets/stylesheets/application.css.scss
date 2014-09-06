@@ -19,5 +19,8 @@
  @import "bootstrap";
 
 body {
-  background-image: asset_url("redox_02.png")
+
+  .body-view {
+    padding: 20px inherit;
+  }
 }

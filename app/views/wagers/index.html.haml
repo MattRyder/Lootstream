@@ -1,27 +1,42 @@
-%h1 Listing wagers
-
-%table.table.table-striped.table-responsive
-  %tr
-    %th Game Type
-    %th Question
-    %th Minimum Amount
-    %th Maximum Amount
-    %th
-    %th
-
-  - @wagers.each do |wager|
+- if @wagers
+  %h1 My Wagers
+  %table.table.table-striped.table-responsive
     %tr
-      %td= wager.game.name
-      %td= wager.question
-      %td= number_to_currency(wager.min_amount, unit: '$')
-      %td= number_to_currency(wager.max_amount, unit: '$')
-      %td= link_to 'View', wager
+      %th Game Type
+      %th Question
+      %th Minimum Amount
+      %th Maximum Amount
+      %th
+      %th
 
-      - if wager.active
-        %td= link_to 'Suspend', wager, :method => :delete, :data => { :confirm => 'Are you sure?' }
-      - else
-        %td
+    - @wagers.each do |wager|
+      %tr
+        %td= wager.game.name
+        %td= wager.question
+        %td= number_to_currency(wager.min_amount, unit: '$')
+        %td= number_to_currency(wager.max_amount, unit: '$')
+        %td= link_to 'View', wager
 
-%br
+        - if wager.active
+          %td= link_to 'Suspend', wager, :method => :delete, :data => { :confirm => 'Are you sure?' }
+        - else
+          %td
+  %br
+- else
+  .panel.panel-warning
+    .panel-heading
+      %h3.panel-title Oh no! You don't have any wagers!
+    .panel-body
+      %p Let's fix that.
+      %ul
+        %li Check out an interactive guide on getting a wager running.
+        %li
+          = link_to new_stream_wager_path do
+            = "Go to the wager creation page."
+
+
+
 
 = link_to 'New Wager', new_stream_wager_path
+|
+= link_to 'Back to Stream', stream_path(params[:stream_id])

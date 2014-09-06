@@ -29,10 +29,12 @@
     $(function () {
       var maxOptions = 1;
       var shouldHideButton = function() {
-        if($('.nested-fields').length >= maxOptions)
+        if($('.nested-fields').length >= maxOptions) {
           $('.add-option').hide();
-        else
+          $('.nested-fields').last().find('input[type="text"]').focus();
+        } else {
           $('.add-option').show();
+        }
       };
       var game_info = function() {
         var game_id = $('select#wager_game_id').val()

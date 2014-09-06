@@ -20,5 +20,7 @@ gem 'simple_form'
 gem 'cocoon'
 gem 'friendly_id'
 
+
+gem 'thin'
 gem 'byebug',        group: :development
 gem 'spring',        group: :development
