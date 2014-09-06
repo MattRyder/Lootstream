@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   resources :wagers, only: [:show, :edit, :update, :destroy]
 
   resources :games do
-    get '/template' => 'games#template', as: :template
+    get 'info' => 'games#game_info', as: :info, on: :member
   end
 
   devise_for :users, controllers: { registrations: 'registrations'}

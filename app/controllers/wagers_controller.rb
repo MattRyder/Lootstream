@@ -45,15 +45,22 @@ class WagersController < ApplicationController
       p "--- REVENUE FOR STREAMER + BETSTREAM: $#{one_pct}"
 
       # give the option to the game, let it grab the transactions
-      redeposits = wager.game.calculate_winnings(wager, option)
+      redeposits = wager.game.calculate_winnings(wager, option) || []
 
       redeposits.each do |uid, amt|
-        byebug
         user = User.find(uid)
         balance = user.stream_balance(stream)
         balance.change(amt)
       end
 
+      # Suspend the Wager, and you're done!
+      wager.suspend
+      status = "Wager suspended, winnings distributed"
+
+      respond_to do |format|
+        format.json { render json: { success: true, status: status }}
+      end
+      
     end
   end
 
@@ -80,7 +87,7 @@ class WagersController < ApplicationController
 
     respond_to do |format|
       if @wager.save
-        format.html { redirect_to @wager, notice: 'Wager was successfully created.' }
+        format.html { redirect_to @stream, notice: 'Wager was successfully created.' }
         format.json { render :show, status: :created, location: @wager }
       else
         format.html { render :new }
@@ -120,7 +127,7 @@ class WagersController < ApplicationController
     end
 
     def get_stream
-      @stream = Stream.find_by(name: params[:stream_id])
+      @stream = Stream.find_by(slug: params[:stream_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

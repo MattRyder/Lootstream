@@ -56,6 +56,8 @@ GEM
     execjs (2.2.1)
     font-awesome-rails (4.1.0.0)
       railties (>= 3.2, < 5.0)
+    friendly_id (5.0.4)
+      activerecord (>= 4.0.0)
     haml (4.0.5)
       tilt
     haml-rails (0.5.3)
@@ -145,6 +147,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   devise
   font-awesome-rails
+  friendly_id
   haml-rails
   jquery-rails
   rails (= 4.1.4)

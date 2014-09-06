@@ -7,12 +7,18 @@ class Wager < ActiveRecord::Base
   accepts_nested_attributes_for :wager_options,
     reject_if: :all_blank, allow_destroy: true
 
+  def suspend
+    self.active = false
+    self.suspended_at = DateTime.now
+    self.save
+  end
+
   # Return the total amount put up for this wager
   def total_amount_bet
     total_amount = 0
     self.wager_options.each do |wo|
       wo_trans = Transaction.where(wager_option_id: wo)
-      total_amount += wo_trans.map(&:amount).reduce(:+)
+      total_amount += wo_trans.map(&:amount).reduce(:+) if wo_trans.count > 0
     end
     total_amount
   end

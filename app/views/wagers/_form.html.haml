@@ -1,19 +1,20 @@
-= simple_form_for(@wager, url: stream_wagers_path) do |f|
+= simple_form_for(@wager, url: stream_wagers_path(params[:stream_id])) do |f|
   = f.error_notification
 
   .row
     .col-md-3
       .form-inputs
-        = f.association :game, label_method: :name
+        = f.association :game, label_method: :name, include_blank: false
         = f.input :min_amount, as: :numeric
         = f.input :max_amount, as: :numeric
 
         = f.input :question, required: true
 
     .col-md-9
-      %h3 Options
-      = link_to_add_association f, :wager_options, data: {'association-insertion-node' => '#options', 'association-insertion-position' => 'append'} do
-        %i.fa.fa-plus
+      %h2 Options
+      .add-option
+        = link_to_add_association f, :wager_options, data: {'association-insertion-node' => '#options', 'association-insertion-position' => 'append'} do
+          %i.fa.fa-plus.fa-2x
       
 
       #options
@@ -26,8 +27,31 @@
 
   :javascript
     $(function () {
-      $("select#wager_game_id").on('change', function() {
+      var maxOptions = 1;
+      var shouldHideButton = function() {
+        if($('.nested-fields').length >= maxOptions)
+          $('.add-option').hide();
+        else
+          $('.add-option').show();
+      };
+      var game_info = function() {
+        var game_id = $('select#wager_game_id').val()
+        $.ajax({
+          url: '/games/'+game_id+'/info.json',
+        }).success(function(data) {
+          maxOptions = data.max_options;
+        });
+      };
+      $('#options').bind('cocoon:after-insert', function() {
+        shouldHideButton();
+      }).bind('cocoon:after-remove', function() {
+        shouldHideButton();
       });
+      $("select#wager_game_id").on('change', function() {
+        game_info();
+      });
+
+      game_info();
     });
 
 

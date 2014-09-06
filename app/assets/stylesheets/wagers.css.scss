@@ -2,6 +2,29 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.wager {
+  h2 { text-align: center; }
+  .options {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}
+
 form {
-  h3 { display: inline; }  
+  h2 { display: inline; } 
+
+
+  .add-option { display: inline-block; }
+
+  input[type='submit'] {
+    margin-top: 15px;
+  }
+
+  .control-group {
+    margin-bottom: 20px;
+  }
+
+  .remove_fields i, .nested-fields {
+    margin-top: 20px    
+  }
 }

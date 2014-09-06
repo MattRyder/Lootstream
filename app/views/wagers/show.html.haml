@@ -17,7 +17,8 @@
     %p.col-xs-3= tr[:option][:text]
     %p.col-xs-3= "Bets Placed: #{tr[:count]}"
     %p.col-xs-3= "Total Bet: #{number_to_currency(tr[:total_amount], unit: '$')}"
-    .col-xs-3= link_to "Set as Winner", '#', class: 'btn btn-default', remote: true
+    - if @wager.active
+      .col-xs-3= link_to "Set as Winner", '#', class: "btn btn-default", remote: true
 
 :javascript
   $('.btn').click(function() {
@@ -27,7 +28,10 @@
       type: 'POST',
       data: {'selected_option' : sel_opt }
     }).complete(function(data) {
-      console.log(data);
+      if(data.success)
+        window.reload();
+      else
+        $('.notice').text('Failed to set winner, please try again!');
     });
     return false;
   });

@@ -2,4 +2,5 @@
   .col-xs-3
     = f.input :text, label: 'Betting Option'
   .col-xs-2
-    = link_to_remove_association 'remove', f
+    = link_to_remove_association f do
+      %i.fa.fa-times.fa-2x

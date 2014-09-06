@@ -1,3 +1,31 @@
 // Place all the styles related to the Stream controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.bet-field {
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.66);
+  border-radius: 7.5px;
+  background: #f7f7f7;
+
+  .btn-success a {
+    color: #FFF;
+  }
+}
+
+.stream-row {
+  margin-bottom: 20px;
+
+  .stream {
+    border: 1px solid rgba(0, 0, 0, 0.33);
+    border-radius: 7px;
+    background: #f7f7f7;
+    padding-top: 20px;
+    
+
+    .row {
+      text-align: center;
+    }
+  }
+}

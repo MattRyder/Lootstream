@@ -18,7 +18,7 @@ gem 'twitch'
 gem 'devise'
 gem 'simple_form'
 gem 'cocoon'
-
+gem 'friendly_id'
 
 gem 'byebug',        group: :development
 gem 'spring',        group: :development

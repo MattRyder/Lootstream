@@ -1,26 +1,26 @@
 %h1 Listing wagers
 
-%table
+%table.table.table-striped.table-responsive
   %tr
+    %th Game Type
     %th Question
-    %th Min amount
-    %th Max amount
-    %th Game
-    %th Stream
-    %th
+    %th Minimum Amount
+    %th Maximum Amount
     %th
     %th
 
   - @wagers.each do |wager|
     %tr
+      %td= wager.game.name
       %td= wager.question
-      %td= wager.min_amount
-      %td= wager.max_amount
-      %td= wager.game
-      %td= wager.stream
-      %td= link_to 'Show', wager
-      %td= link_to 'Edit', edit_wager_path(wager)
-      %td= link_to 'Destroy', wager, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %td= number_to_currency(wager.min_amount, unit: '$')
+      %td= number_to_currency(wager.max_amount, unit: '$')
+      %td= link_to 'View', wager
+
+      - if wager.active
+        %td= link_to 'Suspend', wager, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      - else
+        %td
 
 %br
 

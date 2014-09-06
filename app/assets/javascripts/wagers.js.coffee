@@ -15,7 +15,9 @@ $ ->
         console.log(data)
         if data.success
           $('#stream-balance a').html("Stream Balance: $"+data.new_balance)
-          element.parent().addClass('btn-success').removeClass('btn-default')
+          element.parent().addClass('btn-success')
+          $('.btn').attr('disabled', 'disabled');
+          $('input').attr('disabled', 'disabled');
         else
           $('#amount').parent().addClass('has-error')
           $('.input-group #amount').val("").attr('placeholder', data.error_message)

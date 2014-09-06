@@ -23,7 +23,7 @@ class StreamsController < ApplicationController
       # get the stream object from the database for this:
       @stream = Stream.find_or_create_by!(name: params[:id])
       @balance = current_user.stream_balance(@stream)
-      @wager = Wager.where(stream: @stream).take
+      @wager = Wager.find_by(stream: @stream, active: true)
     end
   end
 end
