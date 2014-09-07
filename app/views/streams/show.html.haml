@@ -5,7 +5,7 @@
 
 .row
   .col-md-8.col-md-offset-2
-    = render 'flash_player', channel: params[:id]
+    = render @player, channel: params[:id]
 
   :javascript
     $(function() {
