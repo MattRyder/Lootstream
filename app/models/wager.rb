@@ -13,11 +13,20 @@ class Wager < ActiveRecord::Base
     self.save
   end
 
+  def set_winner(winner_id)
+    self.winning_option = winner_id
+    self.suspend
+  end
+
   def latest_transaction
     options = self.wager_options.map(&:id)
     Transaction.where(wager_option_id: options).last
   end
 
+  def user_transaction(user_id)
+    Transaction.find_by(user_id: user_id,
+      wager_option_id: self.wager_options.map(&:id))
+  end
 
   # Return the total amount put up for this wager
   def total_amount_bet

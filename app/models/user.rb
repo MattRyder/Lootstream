@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
     balance = self.balances.find_by(stream: stream)
     balance = self.balances.create!(stream: stream, balance: 100) unless balance
 
-    return balance
+    balance
   end
+
 end

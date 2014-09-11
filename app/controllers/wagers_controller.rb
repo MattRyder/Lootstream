@@ -45,6 +45,7 @@ class WagersController < ApplicationController
 
     if option
       wager = option.wager
+      wager.set_winner(option.id)
       one_pct = wager.total_amount_bet * 0.01
       p "--- REVENUE FOR STREAMER + BETSTREAM: $#{one_pct}"
 
@@ -68,21 +69,31 @@ class WagersController < ApplicationController
     end
   end
 
-  def process_realtime(action = 'show')
-    @wager = Wager.find(params[:wager_id])
-    response.headers['Content-Type'] = 'text/event-stream'
-
-    if @wager
+  def process_realtime
+    response = {}
+    @wager = Wager.find(params[:wager_id]) unless params[:wager_id] == "0"
+    
+    if @wager.active
       odds_data = []
       @wager.wager_options.each do |option|
         odds_data << { id: option.id, value: option.calculate_odds }
       end
+      response[:odds] = odds_data.to_json
     end
 
-    response.stream.write "event: client_update\n"
-    response.stream.write "retry: 5500\n"
-    response.stream.write "data: #{odds_data.to_json} \n\n"
-    response.stream.close
+    if !@wager.active && params[:uid]
+      transaction = @wager.user_transaction(params[:uid].to_i)
+      if transaction
+        response[:wager_state] = {
+          state: transaction.wager_option.won ? "won" : "lost",
+          amount: transaction.amount,
+          winopt: @wager.winning_option
+        }
+      end
+    end
+
+    render json: response
+
   end
 
   # GET /wagers/1

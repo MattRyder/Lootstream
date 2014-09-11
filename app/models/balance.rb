@@ -3,7 +3,6 @@ class Balance < ActiveRecord::Base
   belongs_to :stream
 
   def change(amount)
-    self.balance = self.balance + amount
-    self.save
+    self.update_attribute(balance: self.balance + amount)
   end
 end

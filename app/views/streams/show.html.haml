@@ -9,18 +9,25 @@
 
   :javascript
     $(function() {
-      var source = new EventSource("/wagers/#{@wager.id if @wager}/realtime");
-      source.onmessage = function (e) {
+      var wagerPolling = function() {
+        $.ajax({
+          url: '/wagers/#{@wager ? @wager.id : 0}/realtime',
+          dataType: 'JSON',
+          data: { uid : "#{current_user.id}", sid : "#{params[:id]}" }
+        }).success(function(data) {
+          if(data.odds) {
+            for(var i = 0; i < data.length; i++) {
+              var lbl = $(".option-"+data[i].id).find('.label');
+              if(lbl) { lbl.html(data[i].value); }
+            }
+          }
+          if(data.wager_state) {
+            $('.wager .title').text("You "+data.wager_state.state+" $"+data.wager_state.amount+"!");
+            $('.wager .btn').parent().not('.option-'+data.wager_state.winopt).hide();
+            $('.wager .btn').parent('.option-'+data.wager_state.winopt).addClass('col-xs-12');
+          }
+        });
       };
-      source.onerror = function (e) {
-      };
-      source.addEventListener("client_update", function(e) {
-        var data = JSON.parse(e.data);
-        for(var i = 0; i < data.length; i++) {
-          var lbl = $(".option-"+data[i].id).find('.label');
-          if(lbl)
-            lbl.html(data[i].value);
-        }
-      }, false);
 
+      setInterval(wagerPolling, 1500);
     });

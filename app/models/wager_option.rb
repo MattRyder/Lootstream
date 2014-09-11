@@ -10,6 +10,10 @@ class WagerOption < ActiveRecord::Base
     end
   end
 
+  def won
+    self.wager.winning_option == self.id
+  end
+
   def calculate_odds
     wager = self.wager
 

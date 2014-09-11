@@ -23,7 +23,7 @@ class StreamsController < ApplicationController
       # get the stream object from the database for this:
       @stream = Stream.find_or_create_by!(name: params[:id])
       @balance = current_user.stream_balance(@stream)
-      @wager = Wager.find_by(stream: @stream, active: true)
+      @wager = Wager.where(stream: @stream).last
 
       if request.env['HTTP_USER_AGENT'] && request.env['HTTP_USER_AGENT'] [/(Mobile\/.+Safari)|(AppleWebKit\/.+Mobile)/]
         @player = 'hls_player'

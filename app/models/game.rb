@@ -34,6 +34,9 @@ class Game < ActiveRecord::Base
       winnings = loss_total * pot_percentage
       redeposit_amounts[win_trans.user.id] = (win_trans.amount + winnings)
       p "--- User #{win_trans.user.id} wins $#{winnings} on $#{win_trans.amount} bet"
+
+      # Set this transaction as a winner:
+      win_trans.update_attribute(won: true)
     end
 
     redeposit_amounts
