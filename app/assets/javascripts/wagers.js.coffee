@@ -12,7 +12,6 @@ $ ->
       dataType: 'json'
       data: { amount: amount_data, wager_option_id: this.name },
       success: (data) ->
-        console.log(data)
         if data.success
           $('#stream-balance a').html("Stream Balance: $"+data.new_balance)
           element.parent().addClass('btn-success')
@@ -23,6 +22,6 @@ $ ->
           $('.input-group #amount').val("").attr('placeholder', data.error_message)
         return false
       error: (data) ->
-        console.log('ERROR: '+data)
+        console.log(data)
         return false
     })

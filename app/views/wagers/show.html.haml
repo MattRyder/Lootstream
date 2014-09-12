@@ -11,9 +11,9 @@
   %b Max amount:
   = @wager.max_amount
 
-%h3 Transactions
+%h3 Betting Options
 - @summary.each do |tr|
-  .row{'data-dist-id' => "#{tr[:option].id}"}
+  .row{'data-dist-id' => "#{tr[:option].id}", class: ""}
     %p.col-xs-3= tr[:option][:text]
     %p.col-xs-3= "Bets Placed: #{tr[:count]}"
     %p.col-xs-3= "Total Bet: #{number_to_currency(tr[:total_amount], unit: '$')}"
@@ -22,14 +22,16 @@
 
 :javascript
   $('.btn').click(function() {
+    debugger;
     var sel_opt = $(this).parents('.row').data('dist-id');
     $.ajax({
       url: '/distribute_winnings',
       type: 'POST',
       data: {'selected_option' : sel_opt }
     }).complete(function(data) {
+      debugger;
       if(data.success)
-        window.reload();
+        location.reload(true);
       else
         $('.notice').text('Failed to set winner, please try again!');
     });

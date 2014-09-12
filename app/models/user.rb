@@ -15,10 +15,9 @@ class User < ActiveRecord::Base
     :if => :email_changed?
 
   def stream_balance(stream)
-    balance = self.balances.find_by(stream: stream)
-    balance = self.balances.create!(stream: stream, balance: 100) unless balance
-
-    balance
+    balance = self.balances.find_or_create_by(stream: stream) do |s|
+      s.balance = 100
+    end
   end
 
 end

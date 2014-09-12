@@ -16,11 +16,15 @@ class WagersController < ApplicationController
     #Validate Amount:
     amount = params[:amount].to_i
     wager = WagerOption.find(params[:wager_option_id]).wager
+    bal = current_user.stream_balance(wager.stream)
+    byebug
 
     if amount < wager.min_amount
       error_message = "Amount must be above $#{wager.min_amount.to_i}"
     elsif amount > wager.max_amount
       error_message = "Amount must be under $#{wager.max_amount.to_i}"
+    elsif bal.balance - amount < 0
+      error_message = "Not enough balance!"
     end
 
     if !error_message
@@ -29,11 +33,8 @@ class WagersController < ApplicationController
         wager_option_id: params[:wager_option_id],
         user_id: current_user.id)
 
-      stream = WagerOption.find(params[:wager_option_id]).wager.stream
-      balance = current_user.balances(stream_id: stream).first
-      balance.change(-amount)
-
-      render json: { success: true, new_balance: balance.balance }
+      bal.change(-amount)
+      render json: { success: true, new_balance: bal.balance }
     else
       render json: { success: false, error_message: error_message}
     end
