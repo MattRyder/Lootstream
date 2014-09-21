@@ -1,6 +1,6 @@
 class Balance < ActiveRecord::Base
   belongs_to :user
-  belongs_to :stream
+  belongs_to :channel
 
   validates :balance, numericality: { greater_than: 0 }
 

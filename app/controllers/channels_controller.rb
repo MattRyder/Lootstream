@@ -1,4 +1,4 @@
-class StreamsController < ApplicationController
+class ChannelsController < ApplicationController
   before_action :authenticate_user!
 
   def index
@@ -17,14 +17,21 @@ class StreamsController < ApplicationController
     end
   end
   def show
+    Channel.find_or_create_by(name: params[:id])
     stream = twitch.getStream(params[:id])
 
-    if stream
-      # get the stream object from the database for this:
-      @stream = Stream.find_or_create_by!(name: params[:id])
-      @balance = current_user.stream_balance(@stream)
-      @wager = Wager.where(stream: @stream).last
+    channel = twitch.getChannel(params[:id])
+    @channel_data = {
+      status: channel[:body]['status'],
+      game: channel[:body]['game'],
+      background: channel[:body]['background']
+    }
 
+    if stream
+      # Load or save this channel:
+      @channel = Channel.friendly.find(params[:id])
+      @balance = current_user.channel_balance(@channel)
+      @wager = Wager.where(channel: @channel).last
       if request.env['HTTP_USER_AGENT'] && request.env['HTTP_USER_AGENT'] [/(Mobile\/.+Safari)|(AppleWebKit\/.+Mobile)/]
         @player = 'hls_player'
       else

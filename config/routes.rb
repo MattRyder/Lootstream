@@ -5,7 +5,14 @@ Rails.application.routes.draw do
   get 'welcome/index'
   get 'welcome/contact'
 
-  resources :streams do
+  namespace :api, path: "", constraints: {subdomain: 'api'}, defaults: {format: 'json'} do
+    namespace :v1 do
+      get '/channel' => 'channel#channel'
+      post '/create_wager' => 'wagers#create_wager'
+    end
+  end
+
+  resources :channels do
     resources :wagers, only: [:index, :new, :create]
   end
 
@@ -19,7 +26,11 @@ Rails.application.routes.draw do
     get 'info' => 'games#game_info', as: :info, on: :member
   end
 
-  devise_for :users, controllers: { registrations: 'registrations'}
+  devise_for :users, controllers: {
+    registrations: 'users/registrations',
+    sessions: 'users/sessions'
+  }
+  
   get 'users/auth' => 'user#auth', as: :auth_user
 
   post '/place_bet' => 'wagers#place_bet', as: :place_bet

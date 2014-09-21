@@ -21,6 +21,9 @@
 body {
 
   .body-view {
-    padding: 20px inherit;
+    padding: 20px 0;
   }
+  
+  .notice:empty, .alert:empty {display: none;}
 }
+

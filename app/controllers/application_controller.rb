@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
     @twitch = Twitch.new({
       client_id: Rails.application.secrets.twitch_client_id,
       secret_key: Rails.application.secrets.twitch_secret_key,
-      redirect_uri: new_user_registration_url,
+      redirect_uri: root_url,
       scope: ["user_read", "channel_read"]
     })
   end

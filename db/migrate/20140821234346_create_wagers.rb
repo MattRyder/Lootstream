@@ -7,7 +7,7 @@ class CreateWagers < ActiveRecord::Migration
       t.boolean :active, default: true
       t.datetime :suspended_at
       t.belongs_to :game, index: true
-      t.belongs_to :stream, index: true
+      t.belongs_to :channel, index: true
 
       t.timestamps
     end

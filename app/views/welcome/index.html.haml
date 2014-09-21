@@ -1,2 +1,10 @@
-%h1 Welcome#index
-%p Find me in app/views/welcome/index.html.haml
+.col-xs-8
+  %h2 Earn money watching livestreams
+  %p Yep, that's the strapline
+.col-xs-4.authentication
+  - unless user_signed_in?
+    .row
+      - view = params[:code] ? 'ajax_sign_up' : 'new_user'
+      = render "devise/registrations/#{view}"
+    .row
+      = render 'devise/sessions/ajax_sign_in'

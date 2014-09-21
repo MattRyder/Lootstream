@@ -1,0 +1,5 @@
+.registration
+  .row
+    %h3.welcome Sign in
+  .row
+    = render 'devise/sessions/sign_in_form', resource: User.new, resource_name: 'user'

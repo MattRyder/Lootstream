@@ -1,6 +1,6 @@
 class Wager < ActiveRecord::Base
   belongs_to :game
-  belongs_to :stream
+  belongs_to :channel
 
   has_many :wager_options
 

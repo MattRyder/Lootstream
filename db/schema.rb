@@ -11,18 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140911223102) do
+ActiveRecord::Schema.define(version: 20140920222013) do
 
   create_table "balances", force: true do |t|
     t.integer  "user_id"
-    t.integer  "stream_id"
+    t.integer  "channel_id"
     t.decimal  "balance",    precision: 8, scale: 2
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "balances", ["stream_id"], name: "index_balances_on_stream_id"
+  add_index "balances", ["channel_id"], name: "index_balances_on_channel_id"
   add_index "balances", ["user_id"], name: "index_balances_on_user_id"
+
+  create_table "channels", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "slug"
+    t.integer  "user_id"
+  end
+
+  add_index "channels", ["slug"], name: "index_channels_on_slug", unique: true
 
   create_table "friendly_id_slugs", force: true do |t|
     t.string   "slug",                      null: false
@@ -44,22 +54,12 @@ ActiveRecord::Schema.define(version: 20140911223102) do
     t.datetime "updated_at"
   end
 
-  create_table "streams", force: true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "slug"
-  end
-
-  add_index "streams", ["slug"], name: "index_streams_on_slug", unique: true
-
   create_table "transactions", force: true do |t|
     t.decimal  "amount"
     t.integer  "user_id"
     t.integer  "wager_option_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "won",             default: false
   end
 
   add_index "transactions", ["user_id"], name: "index_transactions_on_user_id"
@@ -100,13 +100,13 @@ ActiveRecord::Schema.define(version: 20140911223102) do
     t.boolean  "active",         default: true
     t.datetime "suspended_at"
     t.integer  "game_id"
-    t.integer  "stream_id"
+    t.integer  "channel_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "winning_option"
   end
 
+  add_index "wagers", ["channel_id"], name: "index_wagers_on_channel_id"
   add_index "wagers", ["game_id"], name: "index_wagers_on_game_id"
-  add_index "wagers", ["stream_id"], name: "index_wagers_on_stream_id"
 
 end

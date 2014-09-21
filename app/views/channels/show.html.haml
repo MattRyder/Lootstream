@@ -2,11 +2,6 @@
   .row
     .col-md-6.col-md-offset-3.bet-field
       = render 'bet_field', wager: @wager
-
-.row
-  .col-md-8.col-md-offset-2
-    = render @player, channel: params[:id]
-
   :javascript
     $(function() {
       var wagerPolling = function() {
@@ -28,6 +23,18 @@
           }
         });
       };
-
-      setInterval(wagerPolling, 1500);
+      //var wagerPollInterval = setInterval(wagerPolling, 1500);
+      $(document).on('page:before-change', function() {
+        window.clearInterval(wagerPollInterval);
+      })
     });
+
+.row
+  .col-md-8.col-md-offset-2
+    = render @player, channel: params[:id]
+
+.row
+  .col-md-8.col-md-offset-2
+    .row.channel-info
+      %h3= @channel_data[:status]
+      %p= @channel_data[:game]

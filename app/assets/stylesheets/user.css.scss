@@ -1,3 +1,39 @@
 // Place all the styles related to the User controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.new {
+  background: #4db6f7;
+}
+
+.registration {
+  background: #FAFAFA;
+  border: 1px solid rgba(0, 0, 0, 0.37);
+  border-radius: 7.5px;
+  padding: 0 0 10px 0;
+
+  .row { margin: 0; }
+
+  form {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .form-actions {
+    a, input {
+      display: inline;
+    }
+  }
+
+  .welcome {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.10);
+    padding-bottom: 5px;
+    padding-left: 15px;
+  }
+}
+
+.btn-twitch-connect {
+  height: 32px;
+  width: 170px;
+  margin-left: 15px;
+  background-image: url('https://camo.githubusercontent.com/f1266002daa15b9aeeb5ab511afef6aa4faffdb5/687474703a2f2f7474762d6170692e73332e616d617a6f6e6177732e636f6d2f6173736574732f636f6e6e6563745f6c696768742e706e67');
+}

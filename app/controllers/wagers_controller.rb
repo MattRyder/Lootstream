@@ -1,23 +1,20 @@
 class WagersController < ApplicationController
   before_action :set_wager, only: [:show, :edit, :update, :destroy]
-  before_action :get_stream, only: [:index, :create]
+  before_action :get_channel, only: [:index, :create]
 
   helper_method :calculate_odds
-
-  include ActionController::Live
 
   # GET /wagers
   # GET /wagers.json
   def index
-    @wagers = Wager.where(stream: @stream)
+    @wagers = Wager.where(channel: @channel)
   end
 
   def place_bet
     #Validate Amount:
     amount = params[:amount].to_i
     wager = WagerOption.find(params[:wager_option_id]).wager
-    bal = current_user.stream_balance(wager.stream)
-    byebug
+    bal = current_user.channel_balance(wager.channel)
 
     if amount < wager.min_amount
       error_message = "Amount must be above $#{wager.min_amount.to_i}"
@@ -42,7 +39,7 @@ class WagersController < ApplicationController
 
   def distribute_winnings
     option = WagerOption.find(params[:selected_option])
-    stream = option.wager.stream
+    channel = option.wager.channel
 
     if option
       wager = option.wager
@@ -55,7 +52,7 @@ class WagersController < ApplicationController
 
       redeposits.each do |uid, amt|
         user = User.find(uid)
-        balance = user.stream_balance(stream)
+        balance = user.channel_balance(channel)
         balance.change(amt)
       end
 
@@ -74,22 +71,22 @@ class WagersController < ApplicationController
     response = {}
     @wager = Wager.find(params[:wager_id]) unless params[:wager_id] == "0"
     
-    if @wager.active
-      odds_data = []
-      @wager.wager_options.each do |option|
-        odds_data << { id: option.id, value: option.calculate_odds }
-      end
-      response[:odds] = odds_data.to_json
-    end
-
-    if !@wager.active && params[:uid]
-      transaction = @wager.user_transaction(params[:uid].to_i)
-      if transaction
-        response[:wager_state] = {
-          state: transaction.wager_option.won ? "won" : "lost",
-          amount: transaction.amount,
-          winopt: @wager.winning_option
-        }
+    if @wager.present?
+      if @wager.active
+        odds_data = []
+        @wager.wager_options.each do |option|
+          odds_data << { id: option.id, value: option.calculate_odds }
+        end
+        response[:odds] = odds_data.to_json
+      elsif params[:uid].present?
+        transaction = @wager.user_transaction(params[:uid].to_i)
+        if transaction
+          response[:wager_state] = {
+            state: transaction.wager_option.won ? "won" : "lost",
+            amount: transaction.amount,
+            winopt: @wager.winning_option
+          }
+        end
       end
     end
 
@@ -116,12 +113,14 @@ class WagersController < ApplicationController
   # POST /wagers.json
   def create
     @wager = Wager.new(wager_params)
-    @wager.stream = @stream
+    @wager.channel = @channel
+
+    byebug
 
     respond_to do |format|
       if @wager.save
-        format.html { redirect_to @stream, notice: 'Wager was successfully created.' }
-        format.json { render :show, status: :created, location: @wager }
+        format.html { redirect_to @channel, notice: 'Wager was successfully created.' }
+        format.json { render @wager, status: :created }
       else
         format.html { render :new }
         format.json { render json: @wager.errors, status: :unprocessable_entity }
@@ -148,7 +147,7 @@ class WagersController < ApplicationController
   def destroy
     @wager.suspend
     respond_to do |format|
-      format.html { redirect_to stream_url(@wager.stream), notice: 'Wager was successfully suspended.' }
+      format.html { redirect_to channel_url(@wager.channel), notice: 'Wager was successfully suspended.' }
       format.json { head :no_content }
     end
   end
@@ -159,8 +158,8 @@ class WagersController < ApplicationController
       @wager = Wager.find(params[:id])
     end
 
-    def get_stream
-      @stream = Stream.find_by(slug: params[:stream_id])
+    def get_channel
+      @channel = Channel.friendly.find(params[:channel_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

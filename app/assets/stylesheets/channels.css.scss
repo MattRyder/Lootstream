@@ -1,6 +1,8 @@
-// Place all the styles related to the Stream controller here.
+// Place all the styles related to the Channels controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+body.show { background: #CCC; }
 
 .bet-field, object {
   padding: 10px;
@@ -13,6 +15,10 @@
   .btn-success a {
     color: #FFF;
   }
+}
+
+.player-row {
+  background: #FFF;
 }
 
 .stream-row {
@@ -35,4 +41,7 @@ object {
   width: 100%;
   margin-top: 20px;
   padding: 0;
+}
+
+.channel-info {
 }

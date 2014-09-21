@@ -20,6 +20,7 @@ gem 'simple_form'
 gem 'cocoon'
 gem 'friendly_id'
 
+gem 'simple_token_authentication'
 
 gem 'thin'
 gem 'byebug',        group: :development
