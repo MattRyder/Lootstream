@@ -39,31 +39,10 @@ class WagersController < ApplicationController
 
   def distribute_winnings
     option = WagerOption.find(params[:selected_option])
-    channel = option.wager.channel
+    status = option.wager.set_winner(option)
 
-    if option
-      wager = option.wager
-      wager.set_winner(option.id)
-      one_pct = wager.total_amount_bet * 0.01
-      p "--- REVENUE FOR STREAMER + BETSTREAM: $#{one_pct}"
-
-      # give the option to the game, let it grab the transactions
-      redeposits = wager.game.calculate_winnings(wager, option) || []
-
-      redeposits.each do |uid, amt|
-        user = User.find(uid)
-        balance = user.channel_balance(channel)
-        balance.change(amt)
-      end
-
-      # Suspend the Wager, and you're done!
-      wager.suspend
-      status = "Wager suspended, winnings distributed"
-
-      respond_to do |format|
-        format.json { render json: { success: true, status: status }}
-      end
-      
+    respond_to do |format|
+      format.json { render json: { success: true, status: status }}
     end
   end
 

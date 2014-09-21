@@ -9,11 +9,17 @@ class API::V1::WagersController < API::V1::ApiController
     render json: @user.channel.to_json(except: [:id])
   end
 
-  # GET /channel/(/:id)/create_wager
+  # POST /channel/(/:id)/create_wager
   def create_wager
+    channel = @user.channel
+    byebug
+    if channel.wagers.active.present?
+      render json: { message: 'Wager already active.' } and return
+    end
+
     if params[:wager].present?
       wager = Wager.new(wager_params)
-      wager.channel_id = @user.channel.id
+      wager.channel_id = channel.id
 
       if wager.save
         render json: { message: 'Saved Wager successfully.' }
@@ -23,6 +29,21 @@ class API::V1::WagersController < API::V1::ApiController
 
     else
       render json: { message: 'Your request was malformed or incomplete.'}
+    end
+  end
+
+  # POST /set_winner
+  def set_winner
+    option = WagerOption.find(params[:wager_option])
+    byebug
+    if option.wager.channel == @user.channel
+      message = option.wager.set_winner(option)
+    else
+      message = 'Failed to set winner for Wager.'
+    end
+
+    respond_to do |format|
+      format.json { render json: { message: message }}
     end
   end
 

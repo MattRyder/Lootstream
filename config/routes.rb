@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       get '/channel' => 'channel#channel'
       post '/create_wager' => 'wagers#create_wager'
+      post '/set_winner' => 'wagers#set_winner'
     end
   end
 
