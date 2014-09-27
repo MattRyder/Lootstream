@@ -1,6 +1,6 @@
 class WagersController < ApplicationController
   before_action :set_wager, only: [:show, :edit, :update, :destroy]
-  before_action :get_channel, only: [:index, :create]
+  before_action :get_channel, only: [:index, :create, :active_wager]
 
   helper_method :calculate_odds
 
@@ -70,7 +70,6 @@ class WagersController < ApplicationController
     end
 
     render json: response
-
   end
 
   # GET /wagers/1

@@ -16,6 +16,19 @@ class ChannelsController < ApplicationController
       }
     end
   end
+
+  def active_wager
+    channel = Channel.find(params[:channel_id])
+    @wager = Wager.find_by(channel_id: channel.id, active: true)
+    respond_to do |format|
+      if @wager.nil? || @wager.id.to_s == params[:current_wager]
+        format.js { render nothing: true }
+      else
+        format.js { render 'betfield' }
+      end
+    end
+  end
+
   def show
     Channel.find_or_create_by(name: params[:id])
     stream = twitch.getStream(params[:id])
@@ -44,4 +57,5 @@ class ChannelsController < ApplicationController
       end
     end
   end
+
 end

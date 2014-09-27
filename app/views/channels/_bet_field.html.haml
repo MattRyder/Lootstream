@@ -1,4 +1,4 @@
-.wager{class: "wager-#{wager.game.name}" }
+.wager{class: "game-#{wager.game.id}", data: { wid: wager.id } }
   .row
     %h2.title= wager.question
   .row
@@ -14,3 +14,32 @@
         %h4
           %span.label.label-info
             = option.calculate_odds
+
+  :javascript
+    $(function() {
+      var wagerPolling = function() {
+        $.ajax({
+          url: '/wagers/#{@wager ? @wager.id : 0}/realtime',
+          dataType: 'JSON',
+          data: { uid : "#{current_user.id}", sid : "#{params[:id]}" }
+        }).success(function(data) {
+          if(data.odds) {
+            for(var i = 0; i < data.length; i++) {
+              var lbl = $(".option-"+data[i].id).find('.label');
+              if(lbl) { lbl.html(data[i].value); }
+            }
+          }
+          if(data.wager_state) {
+            $('.wager .title').text("You "+data.wager_state.state+" $"+data.wager_state.amount+"!");
+            $('.wager .btn').parent().not('.option-'+data.wager_state.winopt).hide();
+            $('.wager .btn').parent('.option-'+data.wager_state.winopt).addClass('col-xs-12');
+          }
+        });
+      };
+      //var wagerPollInterval = setInterval(wagerPolling, 3000);
+      $(document).on('page:before-change', function() {
+        window.clearInterval(wagerPollInterval);
+        window.clearInterval(wagerUpdateInterval);
+      })
+      //wagerPolling(); //Like fuck am I waiting 3 sec for an initial update
+    });

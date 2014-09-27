@@ -1,33 +1,7 @@
 - if @wager
   .row
-    .col-md-6.col-md-offset-3.bet-field
+    #bet-field.col-md-6.col-md-offset-3
       = render 'bet_field', wager: @wager
-  :javascript
-    $(function() {
-      var wagerPolling = function() {
-        $.ajax({
-          url: '/wagers/#{@wager ? @wager.id : 0}/realtime',
-          dataType: 'JSON',
-          data: { uid : "#{current_user.id}", sid : "#{params[:id]}" }
-        }).success(function(data) {
-          if(data.odds) {
-            for(var i = 0; i < data.length; i++) {
-              var lbl = $(".option-"+data[i].id).find('.label');
-              if(lbl) { lbl.html(data[i].value); }
-            }
-          }
-          if(data.wager_state) {
-            $('.wager .title').text("You "+data.wager_state.state+" $"+data.wager_state.amount+"!");
-            $('.wager .btn').parent().not('.option-'+data.wager_state.winopt).hide();
-            $('.wager .btn').parent('.option-'+data.wager_state.winopt).addClass('col-xs-12');
-          }
-        });
-      };
-      //var wagerPollInterval = setInterval(wagerPolling, 1500);
-      $(document).on('page:before-change', function() {
-        window.clearInterval(wagerPollInterval);
-      })
-    });
 
 .row
   .col-md-8.col-md-offset-2
@@ -37,4 +11,15 @@
   .col-md-8.col-md-offset-2
     .row.channel-info
       %h3= @channel_data[:status]
-      %p= @channel_data[:game]
+      %p = @channel_data[:game]
+
+:javascript
+  var wagerUpdateInterval = setInterval(function() {
+    $.ajax({
+      url: "/channels/#{@wager.channel_id}/wagers/active.js",
+      data: { "current_wager": #{@wager.id} }
+    }).complete(function(data) {
+      eval(data.responseText);
+    });
+  }, 5000);
+  clearInterval(wagerUpdateInterval);

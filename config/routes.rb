@@ -14,7 +14,9 @@ Rails.application.routes.draw do
   end
 
   resources :channels do
-    resources :wagers, only: [:index, :new, :create]
+    resources :wagers, only: [:index, :new, :create] do
+      get 'active'   => 'channels#active_wager',     as: :active, on: :collection
+    end
   end
 
   post '/distribute_winnings' => "wagers#distribute_winnings", as: :wager_distribute

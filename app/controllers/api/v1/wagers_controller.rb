@@ -12,7 +12,6 @@ class API::V1::WagersController < API::V1::ApiController
   # POST /channel/(/:id)/create_wager
   def create_wager
     channel = @user.channel
-    byebug
     if channel.wagers.active.present?
       render json: { message: 'Wager already active.' } and return
     end
