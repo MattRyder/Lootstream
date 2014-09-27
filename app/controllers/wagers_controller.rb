@@ -11,30 +11,10 @@ class WagersController < ApplicationController
   end
 
   def place_bet
-    #Validate Amount:
-    amount = params[:amount].to_i
-    wager = WagerOption.find(params[:wager_option_id]).wager
-    bal = current_user.channel_balance(wager.channel)
-
-    if amount < wager.min_amount
-      error_message = "Amount must be above $#{wager.min_amount.to_i}"
-    elsif amount > wager.max_amount
-      error_message = "Amount must be under $#{wager.max_amount.to_i}"
-    elsif bal.balance - amount < 0
-      error_message = "Not enough balance!"
-    end
-
-    if !error_message
-      transaction = Transaction.create(
-        amount: params[:amount],
-        wager_option_id: params[:wager_option_id],
-        user_id: current_user.id)
-
-      bal.change(-amount)
-      render json: { success: true, new_balance: bal.balance }
-    else
-      render json: { success: false, error_message: error_message}
-    end
+    option = WagerOption.find(params[:wager_option_id])
+    result = option.wager.place_bet(params[:wager_option_id],
+      current_user, params[:amount])
+    render json: result
   end
 
   def distribute_winnings
@@ -92,8 +72,6 @@ class WagersController < ApplicationController
   def create
     @wager = Wager.new(wager_params)
     @wager.channel = @channel
-
-    byebug
 
     respond_to do |format|
       if @wager.save

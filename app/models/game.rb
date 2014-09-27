@@ -8,10 +8,10 @@ class Game < ActiveRecord::Base
     losing_option = wager.wager_options.where
                     .not(id: winning_option.id).first
 
-    return if losing_option.transactions.empty? || winning_option.transactions.empty?
+    return if losing_option.transactions.empty? && winning_option.transactions.empty?
 
-    win_total = winning_option.transactions.map(&:amount).reduce(:+)
-    loss_total = losing_option.transactions.map(&:amount).reduce(:+)
+    win_total = winning_option.amount_bet
+    loss_total = losing_option.amount_bet
 
     total_pot = win_total + loss_total
 
@@ -32,7 +32,9 @@ class Game < ActiveRecord::Base
 
       # Winnings are <pot_pct>% of the losing pot
       winnings = loss_total * pot_percentage
-      redeposit_amounts[win_trans.user.id] = (win_trans.amount + winnings)
+      redeposit_amount = (win_trans.amount + winnings)
+      redeposit_amount -= win_share if !loss_total.zero?
+      redeposit_amounts[win_trans.user.id] = redeposit_amount
       p "--- User #{win_trans.user.id} wins $#{winnings} on $#{win_trans.amount} bet"
     end
 

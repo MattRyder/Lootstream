@@ -34,7 +34,6 @@ class API::V1::WagersController < API::V1::ApiController
   # POST /set_winner
   def set_winner
     option = WagerOption.find(params[:wager_option])
-    byebug
     if option.wager.channel == @user.channel
       message = option.wager.set_winner(option)
     else

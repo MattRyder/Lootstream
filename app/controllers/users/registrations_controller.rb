@@ -13,7 +13,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     user = twitch_auth(resource.access_token).getYourUser()
     c_name = twitch.getChannel(user[:body]['name'])
     channel = Channel.find_or_create_by(name: c_name[:body]['name'])
-    byebug
+    
     if resource.channel.blank?
       resource.update(channel: channel)
     end

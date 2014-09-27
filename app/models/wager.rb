@@ -10,7 +10,7 @@ class Wager < ActiveRecord::Base
   scope :active, -> { where(active: true) }
 
   def set_winner(option)
-    byebug
+
     if option and option.wager == self
       self.winning_option = option.id
       self.suspend
@@ -28,6 +28,34 @@ class Wager < ActiveRecord::Base
       end
 
       status = "Wager suspended, winnings distributed"
+    end
+  end
+
+  def place_bet(wager_option_id, current_user, amount)
+    amount = amount.to_i
+    wager = WagerOption.find(wager_option_id).wager
+    bal = current_user.channel_balance(wager.channel)
+
+    if wager.blank?
+      error_message = "Cannot find wager for that option!"
+    elsif amount < wager.min_amount
+      error_message = "Amount must be above $#{wager.min_amount.to_i}"
+    elsif amount > wager.max_amount
+      error_message = "Amount must be under $#{wager.max_amount.to_i}"
+    elsif bal.balance - amount < 0
+      error_message = "Not enough balance!"
+    end
+
+    if !error_message
+      transaction = Transaction.create(
+        amount: amount,
+        wager_option_id: wager_option_id,
+        user_id: current_user.id)
+
+      bal.change(-amount)
+      return { success: true, new_balance: bal.balance }
+    else
+      return { success: false, error_message: error_message}
     end
   end
 
