@@ -14,11 +14,15 @@
       %p = @channel_data[:game]
 
 :javascript
+  var wagerPollInterval;
   var wagerUpdateInterval = setInterval(function() {
     $.ajax({
       url: "/channels/#{@channel.id}/active.js",
       data: { "current_wager": $('.wager').data('wid') }
     }).complete(function(data) {
       eval(data.responseText);
+      if (data.responseText != " ") {
+        wagerPollInterval = setInterval(window.wagerPolling, 3000);
+      }
     });
   }, 5000);

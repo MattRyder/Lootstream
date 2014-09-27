@@ -17,7 +17,7 @@
 
   :javascript
     $(function() {
-      var wagerPolling = function() {
+      window.wagerPolling = function() {
         $.ajax({
           url: '/wagers/#{@wager ? @wager.id : 0}/realtime',
           dataType: 'JSON',
@@ -34,13 +34,17 @@
             $('.wager .title').text("You "+data.wager_state.state+" $"+formatted_amount+"!");
             $('.wager .btn').parent().not('.option-'+data.wager_state.winopt).hide();
             $('.wager .btn').parent('.option-'+data.wager_state.winopt).addClass('col-xs-12');
+            if(wagerPollInterval) {
+              clearInterval(wagerPollInterval);
+            }
           }
         });
-      };
+      }; wagerPolling();
       var wagerPollInterval = setInterval(wagerPolling, 3000);
+
       $(document).on('page:before-change', function() {
         window.clearInterval(wagerPollInterval);
         window.clearInterval(wagerUpdateInterval);
       })
-      wagerPolling();
+
     });
