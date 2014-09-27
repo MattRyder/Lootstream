@@ -30,7 +30,8 @@
             }
           }
           if(data.wager_state) {
-            $('.wager .title').text("You "+data.wager_state.state+" $"+data.wager_state.amount+"!");
+            var formatted_amount = parseFloat(data.wager_state.amount).toFixed(2).replace(/[.,]00$/, "");
+            $('.wager .title').text("You "+data.wager_state.state+" $"+formatted_amount+"!");
             $('.wager .btn').parent().not('.option-'+data.wager_state.winopt).hide();
             $('.wager .btn').parent('.option-'+data.wager_state.winopt).addClass('col-xs-12');
           }
@@ -41,5 +42,5 @@
         window.clearInterval(wagerPollInterval);
         window.clearInterval(wagerUpdateInterval);
       })
-      //wagerPolling(); //Like fuck am I waiting 3 sec for an initial update
+      wagerPolling();
     });

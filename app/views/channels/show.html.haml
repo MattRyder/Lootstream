@@ -16,10 +16,9 @@
 :javascript
   var wagerUpdateInterval = setInterval(function() {
     $.ajax({
-      url: "/channels/#{@wager.channel_id}/wagers/active.js",
-      data: { "current_wager": #{@wager.id} }
+      url: "/channels/#{@channel.id}/active.js",
+      data: { "current_wager": $('.wager').data('wid') }
     }).complete(function(data) {
       eval(data.responseText);
     });
   }, 5000);
-  clearInterval(wagerUpdateInterval);
