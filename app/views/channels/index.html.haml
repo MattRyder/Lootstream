@@ -1,7 +1,7 @@
 - @streams.in_groups_of(2, false) do |stream_group|
   .row.stream-row
     -stream_group.each do |stream|
-      .col-xs-5.col-xs-offset-1.stream
+      .stream
         .row= link_to image_tag(stream[:preview]['medium']), channel_path(stream[:name]), class: 'img-responsive'
         %h3.row= link_to stream[:name], channel_path(stream[:name])
         %p.row= stream[:status]

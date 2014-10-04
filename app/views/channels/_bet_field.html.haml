@@ -21,17 +21,16 @@
         $.ajax({
           url: '/wagers/#{@wager ? @wager.id : 0}/realtime',
           dataType: 'JSON',
-          data: { uid : "#{current_user.id}", sid : "#{params[:id]}" }
+          data: { uid : "#{current_user.id}" }
         }).success(function(data) {
           if(data.odds) {
-            for(var i = 0; i < data.length; i++) {
-              var lbl = $(".option-"+data[i].id).find('.label');
-              if(lbl) { lbl.html(data[i].value); }
+            for(var i = 0; i < data.odds.length; i++) {
+              var lbl = $(".option-"+data.odds[i].id).find('.label');
+              if(lbl) { lbl.html(data.odds[i].value); }
             }
           }
           if(data.wager_state) {
-            var formatted_amount = parseFloat(data.wager_state.amount).toFixed(2).replace(/[.,]00$/, "");
-            $('.wager .title').text("You "+data.wager_state.state+" $"+formatted_amount+"!");
+            $('.wager .title').text("You "+data.wager_state.state+"!");
             $('.wager .btn').parent().not('.option-'+data.wager_state.winopt).hide();
             $('.wager .btn').parent('.option-'+data.wager_state.winopt).addClass('col-xs-12');
             if(wagerPollInterval) {

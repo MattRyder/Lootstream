@@ -1,17 +1,14 @@
 - if @wager
   .row
-    #bet-field.col-md-6.col-md-offset-3
+    #bet-field
       = render 'bet_field', wager: @wager
-
 .row
-  .col-md-8.col-md-offset-2
+  #player
     = render @player, channel: params[:id]
-
 .row
-  .col-md-8.col-md-offset-2
-    .row.channel-info
-      %h3= @channel_data[:status]
-      %p = @channel_data[:game]
+  #channel-info
+    %h3= @channel_data[:status]
+    %p= @channel_data[:game]
 
 :javascript
   var wagerPollInterval;

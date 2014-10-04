@@ -17,13 +17,44 @@
 
  @import "bootstrap-sprockets";
  @import "bootstrap";
+ @import url("http://fonts.googleapis.com/css?family=Noto+Sans");
 
-body {
+ /* Theme Colours */
+ $ls-base: #6F256F;
 
-  .body-view {
-    padding: 20px 0;
-  }
-  
+ html, body {
+  min-height: 100%;
+ }
+
+ body {
+  font-family: 'Noto Sans', sans-serif !important;
+
   .notice:empty, .alert:empty {display: none;}
-}
+
+   /* LootStream Navbar */
+   .navbar-controls {
+    border-radius: 0;
+
+    .navbar-logo {
+      @extend .navbar-brand;
+      color: $ls-base;
+      &:hover { color: $ls-base; }
+    }
+
+    .logout {
+      &:hover {
+        color: #FFF;
+        background-color: rgba(255, 0, 0, 0.66) !important;
+      }
+    }
+
+    a {
+      color: #686868;
+      &:hover {
+        background-color: transparent !important;
+        color: #464646;
+      }
+    }
+   }
+ }
 

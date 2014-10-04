@@ -2,12 +2,11 @@ class WagersController < ApplicationController
   before_action :set_wager, only: [:show, :edit, :update, :destroy]
   before_action :get_channel, only: [:index, :create, :active_wager]
 
-  helper_method :calculate_odds
-
   # GET /wagers
   # GET /wagers.json
   def index
-    @wagers = Wager.where(channel: @channel)
+    @active_wager = Wager.where(channel: @channel, active: true).last
+    @last_wagers = Wager.where(channel: @channel, active: false).last(5)
   end
 
   def place_bet
@@ -36,13 +35,12 @@ class WagersController < ApplicationController
         @wager.wager_options.each do |option|
           odds_data << { id: option.id, value: option.calculate_odds }
         end
-        response[:odds] = odds_data.to_json
+        response[:odds] = odds_data.as_json
       elsif params[:uid].present?
         transaction = @wager.user_transaction(params[:uid].to_i)
         if transaction
           response[:wager_state] = {
             state: transaction.wager_option.won ? "won" : "lost",
-            amount: transaction.amount,
             winopt: @wager.winning_option
           }
         end

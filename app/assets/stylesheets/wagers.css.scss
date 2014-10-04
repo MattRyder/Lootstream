@@ -1,6 +1,7 @@
 // Place all the styles related to the Wagers controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import "bootstrap";
 
 .wager {
   h2 { text-align: center; }
@@ -10,10 +11,17 @@
   }
 }
 
+.wager-row {
+  @extend .col-xs-8, .col-xs-offset-2;
+  @extend .col-md-6, .col-md-offset-3;
+}
+
 form {
-  h2 { display: inline; } 
-
-
+  h3 {
+    display: inline-block;
+    margin-bottom: 15px;
+  } 
+  
   .add-option { display: inline-block; }
 
   input[type='submit'] {
@@ -24,7 +32,15 @@ form {
     margin-bottom: 20px;
   }
 
-  .remove_fields i, .nested-fields {
-    margin-top: 20px    
+  .btn-remove {
+    padding-left: 0;
+  }
+
+  .btn-default {
+    margin-top: 15px;
+  }
+
+  .remove_fields i {
+    margin-top: 3px;    
   }
 }

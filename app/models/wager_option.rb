@@ -20,8 +20,8 @@ class WagerOption < ActiveRecord::Base
     amt_option = self.amount_bet.to_i
     total_less_option = (wager.total_amount_bet.to_i - amt_option)
 
-    #amt_option = 1 if amt_option < 1
-    #total_less_option = 1 if total_less_option < 1
+    amt_option = 1 if amt_option < 1
+    total_less_option = 1 if total_less_option < 1
 
     div_factor = total_less_option.gcd(amt_option)
 

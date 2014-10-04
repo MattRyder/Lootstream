@@ -22,14 +22,12 @@
 
 :javascript
   $('.btn').click(function() {
-    debugger;
     var sel_opt = $(this).parents('.row').data('dist-id');
     $.ajax({
       url: '/distribute_winnings',
       type: 'POST',
       data: {'selected_option' : sel_opt }
     }).complete(function(data) {
-      debugger;
       if(data.success)
         location.reload(true);
       else

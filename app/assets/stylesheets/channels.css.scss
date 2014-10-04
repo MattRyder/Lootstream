@@ -2,11 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-body.show { background: #CCC; }
+@import "bootstrap";
 
 #bet-field, object {
   padding: 10px;
-  margin: 10px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 7.5px;
   background: #f7f7f7;
@@ -25,6 +24,7 @@ body.show { background: #CCC; }
   margin-bottom: 20px;
 
   .stream {
+    @extend .col-xs-5, .col-xs-offset-1;
     border: 1px solid rgba(0, 0, 0, 0.33);
     border-radius: 7px;
     background: #f7f7f7;
@@ -35,6 +35,15 @@ body.show { background: #CCC; }
       text-align: center;
     }
   }
+}
+
+#bet-field {
+  @extend .col-xs-8, .col-xs-offset-2;
+  @extend .col-md-6, .col-md-offset-3;
+}
+
+#player, #channel-info {
+  @extend .col-md-8, .col-md-offset-2;
 }
 
 object {

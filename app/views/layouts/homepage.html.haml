@@ -1,0 +1,41 @@
+!!!
+%html{:lang => 'en'}
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{:name => 'viewport', :content => 'width=device-width, initial-scale=1'}/
+    %title LootStream
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  %body{class: "#{params[:action]}"}
+
+  .hero
+    %nav.navbar.navbar-controls{role: 'navigation'}
+      .container-fluid
+        .navbar-header
+          %button.navbar-toggle{type: 'button', "data-toggle" => 'collapse', "data-target" => '#navi-collapse'}
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          = link_to 'LootStream', root_path, :class => 'navbar-logo'
+        = render "#{user_signed_in? ? "active" : "inactive"}_nav"
+
+    .container-fluid
+      %p.notice= notice
+      %p.alert= alert
+      .col-xs-8
+        %h2 Earn money watching livestreams
+        %p Yep, that's the strapline
+      .col-xs-4.authentication
+        - unless user_signed_in?
+          .row
+            - view = params[:code] ? 'ajax_sign_up' : 'new_user'
+            = render "devise/registrations/#{view}"
+          .row
+            = render 'devise/sessions/ajax_sign_in'
+
+  .container-fluid.post-hero
+    .row
+    .row
+
+

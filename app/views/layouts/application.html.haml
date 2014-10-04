@@ -3,37 +3,23 @@
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %meta{:name => 'viewport', :content => 'width=device-width, initial-scale=1'}/
-    %title BetStream
+    %title LootStream
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body{class: "#{params[:action]}"}
 
-  %nav.navbar.navbar-default.navbar-static-top{role: 'navigation'}
+  %nav.navbar.navbar-controls{role: 'navigation'}
     .container-fluid
       .navbar-header
         %button.navbar-toggle{type: 'button', "data-toggle" => 'collapse', "data-target" => '#navi-collapse'}
           %span.icon-bar
           %span.icon-bar
           %span.icon-bar
-        = link_to 'BetStream', root_path, :class => 'navbar-brand'
-      .collapse.navbar-collapse#navi-collapse
-        %ul.nav.navbar-nav
-          %li= link_to 'Home', root_path
-          %li= link_to 'Logout', destroy_user_session_path, method: :delete if user_signed_in?
-          %li= link_to 'Games', channels_path
-          %li= link_to 'Wagers', channel_wagers_path(params[:id]) if params[:id]
-        -if @channel && @balance
-          %ul.nav.navbar-nav.navbar-right
-            %li#stream-balance= link_to "Stream Balance: #{number_to_currency(@balance.balance, unit: '$')}", '#'
-            %li= link_to 'My Profile', auth_user_path
-
-
-  %p.notice
-    = notice
-
-  %p.alert
-    = alert
+        = link_to 'LootStream', root_path, :class => 'navbar-logo'
+      = render "#{user_signed_in? ? "active" : "inactive"}_nav"
 
 .container-fluid
-  .body-view= yield
+  %p.notice= notice
+  %p.alert= alert
+  = yield

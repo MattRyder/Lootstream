@@ -1,0 +1,13 @@
+.collapse.navbar-collapse#navi-collapse
+  %ul.nav.navbar-nav
+    %li= link_to 'Games', channels_path
+    %li= link_to 'Wagers', channel_wagers_path(params[:id]) if params[:id]
+  %ul.nav.navbar-nav.navbar-right
+    -if @channel && @balance
+      %li#stream-balance
+        = link_to "Stream Balance: #{number_to_currency(@balance.balance, unit: '$')}", '#'
+    %li
+      = link_to 'My Profile', user_path(current_user)
+    %li
+      = link_to destroy_user_session_path, method: :delete, class: 'logout' do
+        %i.fa.fa-sign-out
