@@ -1,51 +1,54 @@
-- if @active_wager
-  %h3 Active Wager
-  %table.table.table-striped.table-responsive
-    %tr
-      %th Game Type
-      %th Question
-      %th Minimum Amount
-      %th Maximum Amount
-      %th
-    %tr
-      %td= @active_wager.game.name
-      %td= @active_wager.question
-      %td= number_to_currency(@active_wager.min_amount, unit: '$')
-      %td= number_to_currency(@active_wager.max_amount, unit: '$')
-      %td= link_to 'View', @active_wager
+.wager-summary
+  - if @active_wager
+    .box
+      %h3 Active Wager
+      %table
+        %tr
+          %th Game Type
+          %th Question
+          %th Minimum Amount
+          %th Maximum Amount
+          %th
+        %tr
+          %td= @active_wager.game.name
+          %td= @active_wager.question
+          %td= number_to_currency(@active_wager.min_amount, unit: '$')
+          %td= number_to_currency(@active_wager.max_amount, unit: '$')
+          %td= link_to 'View', @active_wager
 
 
-- if @last_wagers
-  %h3 Last Five Wagers
-  %table.table.table-striped.table-responsive
-    %tr
-      %th Game Type
-      %th Question
-      %th Minimum Amount
-      %th Maximum Amount
-      %th
+  - if @last_wagers
+    .box
+      %h3 Last Five Wagers
+      %table
+        %tr
+          %th Game Type
+          %th Question
+          %th Minimum Amount
+          %th Maximum Amount
+          %th
 
-    - @last_wagers.each do |wager|
-      %tr
-        %td= wager.game.name
-        %td= wager.question
-        %td= number_to_currency(wager.min_amount, unit: '$')
-        %td= number_to_currency(wager.max_amount, unit: '$')
-        %td= link_to 'View', wager
-  %br
-- else
-  .wager-row
-    .panel.panel-warning
-      .panel-heading
-        %h3.panel-title Oh no! You don't have any wagers!
-      .panel-body
-        %p Let's fix that:
-        %ul
-          %li Check out an interactive guide on getting a wager running.
-          %li
-            = link_to new_channel_wager_path do
-              = "Go to the wager creation page."
-
-%div{ class: "#{'wager-row' unless @last_wagers.present?}" }
-  = link_to 'Back to channel', channel_path(params[:channel_id]), class: 'btn btn-default'
-  = link_to 'New Wager', new_channel_wager_path, class: 'btn btn-primary', :disabled => @active_wager ? 'disabled' : nil
+        - @last_wagers.each do |wager|
+          %tr
+            %td= wager.game.name
+            %td= wager.question
+            %td= number_to_currency(wager.min_amount, unit: '$')
+            %td= number_to_currency(wager.max_amount, unit: '$')
+            %td= link_to 'View', wager
+        %div{ class: "#{'wager-row' unless @last_wagers.present?}" }
+      = link_to 'Back to channel', channel_path(params[:channel_id]), class: 'btn btn-default'
+      = link_to 'New Wager', new_channel_wager_path, class: 'btn btn-primary', :disabled => @active_wager ? 'disabled' : nil
+    
+    %br
+  - else
+    .wager-row.box
+      .panel.panel-warning
+        .panel-heading
+          %h3.panel-title Oh no! You don't have any wagers!
+        .panel-body
+          %p Let's fix that:
+          %ul
+            %li Check out an interactive guide on getting a wager running.
+            %li
+              = link_to new_channel_wager_path do
+                = "Go to the wager creation page."

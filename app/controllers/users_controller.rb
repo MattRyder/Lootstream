@@ -6,6 +6,8 @@ class UsersController < ApplicationController
   end
 
   def show
+    twitch_data = twitch_auth(current_user.access_token).getYourUser
+    @user_data = twitch_data[:body]
   end
 
 end

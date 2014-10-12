@@ -3,6 +3,15 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import "bootstrap";
 
+$bottom-border: 3px solid lighten(#6F256F, 17.5%);
+
+@mixin box {
+  padding: 10px;
+  border-radius: 4.5px;
+  background-color: #fff;
+  border-bottom: $bottom-border;
+}
+
 .wager {
   h2 { text-align: center; }
   .options {
@@ -11,36 +20,54 @@
   }
 }
 
+.wager-summary {
+  margin-top: 15px;
+
+  table {
+    @extend .table, .table-striped, .table-responsive;
+  }
+
+  .box {
+    @include box;
+  }
+}
+
 .wager-row {
   @extend .col-xs-8, .col-xs-offset-2;
   @extend .col-md-6, .col-md-offset-3;
 }
 
-form {
-  h3 {
-    display: inline-block;
-    margin-bottom: 15px;
-  } 
-  
-  .add-option { display: inline-block; }
+.wager-input {
+  @include box;
+  @extend .col-xs-12;
+  @extend .col-md-9, .col-md-offset-3;
+  margin-top: 15px;
+  form {
+    h3 {
+      display: inline-block;
+      margin-bottom: 15px;
+    } 
+    
+    .add-option { display: inline-block; }
 
-  input[type='submit'] {
-    margin-top: 15px;
-  }
+    input[type='submit'] {
+      margin-top: 15px;
+    }
 
-  .control-group {
-    margin-bottom: 20px;
-  }
+    .control-group {
+      margin-bottom: 20px;
+    }
 
-  .btn-remove {
-    padding-left: 0;
-  }
+    .btn-remove {
+      padding-left: 0;
+    }
 
-  .btn-default {
-    margin-top: 15px;
-  }
+    .btn-default {
+      margin-top: 15px;
+    }
 
-  .remove_fields i {
-    margin-top: 3px;    
+    .remove_fields i {
+      margin-top: 3px;    
+    }
   }
 }

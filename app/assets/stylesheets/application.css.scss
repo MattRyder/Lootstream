@@ -24,6 +24,7 @@
 
  html, body {
   min-height: 100%;
+  background-color: #F4F4F4;
  }
 
  body {
@@ -31,9 +32,15 @@
 
   .notice:empty, .alert:empty {display: none;}
 
+  .ctr-fluid {
+    @extend .container-fluid;
+  }
+
    /* LootStream Navbar */
    .navbar-controls {
     border-radius: 0;
+    margin-bottom: 0;
+    background-color: #FFF;
 
     .navbar-logo {
       @extend .navbar-brand;
@@ -41,11 +48,9 @@
       &:hover { color: $ls-base; }
     }
 
-    .logout {
-      &:hover {
-        color: #FFF;
-        background-color: rgba(255, 0, 0, 0.66) !important;
-      }
+    .logout:hover {
+      color: #FFF;
+      background-color: rgba(255, 0, 0, 0.66) !important;
     }
 
     a {

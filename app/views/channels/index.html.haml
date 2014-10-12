@@ -1,7 +1,7 @@
 - @streams.in_groups_of(2, false) do |stream_group|
-  .row.stream-row
+  .row-ctr
     -stream_group.each do |stream|
-      .stream
-        .row= link_to image_tag(stream[:preview]['medium']), channel_path(stream[:name]), class: 'img-responsive'
+      .stream{ class: "#{cycle('left', 'right')}"}
+        .row= link_to image_tag(stream[:preview]['small']), channel_path(stream[:name]), class: 'img-responsive'
         %h3.row= link_to stream[:name], channel_path(stream[:name])
         %p.row= stream[:status]

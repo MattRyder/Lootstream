@@ -19,7 +19,7 @@
         = link_to 'LootStream', root_path, :class => 'navbar-logo'
       = render "#{user_signed_in? ? "active" : "inactive"}_nav"
 
-.container-fluid
+.ctr-fluid
   %p.notice= notice
   %p.alert= alert
   = yield

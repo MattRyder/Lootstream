@@ -4,53 +4,63 @@
 
 @import "bootstrap";
 
-#bet-field, object {
+$bottom-border: 3px solid lighten(#6F256F, 17.5%);
+
+@mixin box {
   padding: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 7.5px;
-  background: #f7f7f7;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
-
-  .btn-success a {
-    color: #FFF;
-  }
+  border-radius: 4.5px;
+  background-color: #fff;
+  border-bottom: $bottom-border;
 }
 
-.player-row {
-  background: #FFF;
-}
+.row-ctr {
+  @extend .row;
+  padding: 15px 0;
 
-.stream-row {
-  margin-bottom: 20px;
+  #bet-field {
+    @include box;
 
-  .stream {
-    @extend .col-xs-5, .col-xs-offset-1;
-    border: 1px solid rgba(0, 0, 0, 0.33);
-    border-radius: 7px;
-    background: #f7f7f7;
-    padding-top: 20px;
-
-
-    .row {
-      text-align: center;
+    .btn-success a {
+      color: #FFF;
     }
   }
 }
 
-#bet-field {
+.stream {
+  @include box;
+  padding: 25px;
+
+  &:hover {
+    background: #efefef;
+  }
+}
+
+.left {
+  @extend .col-xs-3, .col-xs-offset-2;
+}
+
+.right {
+  @extend .col-xs-3, .col-xs-offset-2;
+}
+
+/* -- Show */
+#bet-field, #channel-info, #player {
   @extend .col-xs-8, .col-xs-offset-2;
   @extend .col-md-6, .col-md-offset-3;
 }
 
-#player, #channel-info {
-  @extend .col-md-8, .col-md-offset-2;
-}
-
-object {
-  width: 100%;
-  margin-top: 20px;
+#player {
   padding: 0;
 }
 
-.channel-info {
+#channel-info {
+  @include box;
+
+  .game-name {
+    display: inline-block;
+  }
+}
+
+object {
+  width:100%;
 }
