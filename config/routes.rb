@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
 
   root "welcome#index"
+
+
+  constraints(SubdomainRouter) do
+    get '/' => 'channels#show', as: :subdomain_show
+  end
   
   get 'welcome/index'
   get 'welcome/contact'

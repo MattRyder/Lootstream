@@ -15,4 +15,5 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require cocoon
+//= require jquery.viewportchecker
 //= require_tree .

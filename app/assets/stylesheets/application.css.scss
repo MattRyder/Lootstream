@@ -12,11 +12,12 @@
  *
  *= require_tree .
  *= require font-awesome
+ *= require animate
  *= require_self
  */
 
  @import "bootstrap-sprockets";
- @import "bootstrap";
+ @import "common";
  @import url("http://fonts.googleapis.com/css?family=Noto+Sans");
 
  /* Theme Colours */
@@ -40,12 +41,16 @@
    .navbar-controls {
     border-radius: 0;
     margin-bottom: 0;
-    background-color: #FFF;
 
     .navbar-logo {
       @extend .navbar-brand;
       color: $ls-base;
       &:hover { color: $ls-base; }
+    }
+
+    .navbar-header-wrap {
+      @extend .col-md-8;
+      @extend .col-md-offset-2;
     }
 
     .logout:hover {
