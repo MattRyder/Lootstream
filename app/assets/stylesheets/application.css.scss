@@ -33,14 +33,13 @@
 
   .notice:empty, .alert:empty {display: none;}
 
-  .ctr-fluid {
-    @extend .container-fluid;
-  }
-
    /* LootStream Navbar */
    .navbar-controls {
+    @extend .navbar-default;
+    border-bottom: 0;
     border-radius: 0;
     margin-bottom: 0;
+    background-color: transparent;
 
     .navbar-logo {
       @extend .navbar-brand;

@@ -23,7 +23,7 @@
             offset: 100,
             repeat: false,
             callbackFunction: function(elem, action){},
-			scrollHorizontal: false
+      scrollHorizontal: false
         };
         $.extend(options, useroptions);
 
@@ -35,14 +35,14 @@
         this.checkElements = function(){
         
             // Set some vars to check with
-			if(!options.scrollHorizontal){
-				var viewportTop = $(scrollElem).scrollTop(),
-					viewportBottom = (viewportTop + windowSize);
-			}
-			else{
-				var viewportTop = $(scrollElem).scrollLeft(),
-					viewportBottom = (viewportTop + windowSize);
-			}
+      if(!options.scrollHorizontal){
+        var viewportTop = $(scrollElem).scrollTop(),
+          viewportBottom = (viewportTop + windowSize);
+      }
+      else{
+        var viewportTop = $(scrollElem).scrollLeft(),
+          viewportBottom = (viewportTop + windowSize);
+      }
             
 
             $elem.each(function(){

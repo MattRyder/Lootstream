@@ -1,5 +1,11 @@
 class Game < ActiveRecord::Base
 
+  def self.types
+    %w(Roulette SimpleBet)
+  end
+
+  #validates :game_type, presence: true, inclusion: { in: self.types }
+
   def calculate_winnings(wager, winning_option)
     
     # Redeposit, win + original bet, to be recredited:

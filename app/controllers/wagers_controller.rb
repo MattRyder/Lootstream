@@ -59,6 +59,7 @@ class WagersController < ApplicationController
   # GET /wagers/new
   def new
     @wager = Wager.new
+    2.times{ @wager.wager_options.build }
   end
 
   # GET /wagers/1/edit

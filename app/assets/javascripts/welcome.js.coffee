@@ -4,4 +4,4 @@
 $ ->
   $('form#user-sign-in').on "ajax:success", (e, data, status, xhr) ->
     if data.success
-      location.reload();
+      window.location.reload();

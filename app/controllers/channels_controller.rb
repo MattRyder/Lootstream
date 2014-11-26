@@ -12,7 +12,8 @@ class ChannelsController < ApplicationController
         viewers: channel['viewers'],
         status: channel['status'],
         preview: stream['preview'],
-        name: channel['name']
+        name: channel['name'],
+        game: channel['game']
       }
     end
   end

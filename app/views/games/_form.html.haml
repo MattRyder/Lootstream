@@ -1,4 +1,4 @@
-= form_for @game do |f|
+= simple_form_for @game do |f|
   - if @game.errors.any?
     #error_explanation
       %h2= "#{pluralize(@game.errors.count, "error")} prohibited this game from being saved:"
@@ -7,10 +7,18 @@
           %li= msg
 
   .field
-    = f.label :name
-    = f.text_field :name
+    = f.input :name
+
   .field
-    = f.label :max_options
-    = f.number_field :max_options
-  .actions
-    = f.submit 'Save'
+    = f.input :game_type, collection: Game.types, include_blank: false
+
+  .field
+    = f.input :description
+
+  .field
+    = f.input :max_options
+  .actions.row{style: "margin-top: 25px;"}
+    .col-xs-3
+      = link_to 'Back', games_path, class: 'btn btn-default'
+    .col-xs-2.pull-right
+      = f.submit 'Save', class: 'btn btn-success pull-right'

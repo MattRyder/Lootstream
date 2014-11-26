@@ -3,15 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 @import "bootstrap";
-
-$bottom-border: 3px solid lighten(#6F256F, 17.5%);
-
-@mixin box {
-  padding: 10px;
-  border-radius: 4.5px;
-  background-color: #fff;
-  border-bottom: $bottom-border;
-}
+@import "common";
 
 .row-ctr {
   @extend .row;

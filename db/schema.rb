@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140920222013) do
+ActiveRecord::Schema.define(version: 20141101163144) do
 
   create_table "balances", force: true do |t|
     t.integer  "user_id"
@@ -52,6 +52,8 @@ ActiveRecord::Schema.define(version: 20140920222013) do
     t.integer  "max_options"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "game_type"
+    t.text     "description"
   end
 
   create_table "transactions", force: true do |t|

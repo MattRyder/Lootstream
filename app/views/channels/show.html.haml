@@ -14,7 +14,7 @@
     .game-name= @channel_data[:game]
 
 :javascript
-  /*var wagerPollInterval;
+  var wagerPollInterval;
   var wagerUpdateInterval = setInterval(function() {
     $.ajax({
       url: "/channels/#{@channel.id}/active.js",
@@ -25,4 +25,4 @@
         wagerPollInterval = setInterval(window.wagerPolling, 3000);
       }
     });
-  }, 5000);*/
+  }, 5000);

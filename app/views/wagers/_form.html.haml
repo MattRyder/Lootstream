@@ -1,25 +1,30 @@
 = simple_form_for(@wager, url: channel_wagers_path(params[:channel_id]),  html: { class: 'form-horizontal' }) do |f|
   = f.error_notification
-  .col-xs-5.col-md-3
+  .col-xs-12.col-sm-5
     %h3 Basic Info
     = f.association :game, label_method: :name, include_blank: false, label: false
+
     = f.input :question, required: true, placeholder: 'Question', label: false
     .input-group
-    = f.input :min_amount, as: :numeric, placeholder: 'Minimum Amount', label: false
-    = f.input :max_amount, as: :numeric, placeholder: 'Maximum Amount', label: false
-    .form-actions.pull-right
-      = link_to 'Back', channel_wagers_path, class: 'btn btn-default'
-      = f.button :submit, class: 'btn btn-primary'
+      %span.input-group-addon $
+      = f.input :min_amount, as: :numeric, placeholder: 'Minimum Amount', label: false
+    .input-group
+      %span.input-group-addon $
+      = f.input :max_amount, as: :numeric, placeholder: 'Maximum Amount', label: false
 
-  .col-xs-6.col-md-4
+  .col-xs-12.col-sm-7
     %h3 Wager Options
     .add-option
-      = link_to_add_association f, :wager_options, data: {'association-insertion-node' => '#options', 'association-insertion-position' => 'append'} do
+      = link_to_add_association f, :wager_options, partial: "wagers/wager_options_fields", data: {'association-insertion-node' => '#options', 'association-insertion-position' => 'append'} do
         %i.fa.fa-plus
     
     #options
       = f.simple_fields_for :wager_options do |option|
         = render 'wager_options_fields', f: option
+
+    .form-actions.pull-right
+      = link_to 'Back', channel_wagers_path, class: 'btn btn-default'
+      = f.button :submit, class: 'btn btn-primary'
 
 :javascript
   $(function () {

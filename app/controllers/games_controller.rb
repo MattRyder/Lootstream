@@ -12,19 +12,21 @@ class GamesController < ApplicationController
 
   # GET /games/new
   def new
+    @game_types = Game.descendants.map(&:name) rescue []
     @game = Game.new
   end
 
   # GET /games/1/edit
   def edit
+    @game_types = Game.descendants.map(&:name) rescue []
   end
 
   # POST /games
   def create
-    @game = Game.new(game_params)
+    @game = create_object
 
     if @game.save
-      redirect_to @game, notice: 'Game was successfully created.'
+      redirect_to games_path, notice: 'Game was successfully created.'
     else
       render :new
     end
@@ -58,8 +60,17 @@ class GamesController < ApplicationController
       @game = Game.find(params[:id])
     end
 
+    def create_object
+      game_type = game_params[:type]
+      if Game.types.include? game_type
+        return game_type.constantize.new
+      else
+        return Game.new
+      end
+    end
+
     # Only allow a trusted parameter "white list" through.
     def game_params
-      params.require(:game).permit(:name, :max_options)
+      params.require(:game).permit(:name, :max_options, :game_type, :description)
     end
 end

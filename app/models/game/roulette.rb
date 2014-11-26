@@ -1,0 +1,3 @@
+class Roulette < Game
+
+end

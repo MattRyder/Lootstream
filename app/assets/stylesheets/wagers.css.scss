@@ -11,7 +11,13 @@
   }
 }
 
+.wager-show {
+  @include box;
+}
+
 .wager-summary {
+  @extend .col-xs-12;
+  @extend .col-sm-8, .col-sm-offset-2;
   margin-top: 15px;
 
   table {
@@ -31,7 +37,7 @@
 .wager-input {
   @include box;
   @extend .col-xs-12;
-  @extend .col-md-9, .col-md-offset-3;
+  @extend .col-sm-8, .col-sm-offset-2;
   margin-top: 15px;
   form {
     h3 {
@@ -45,7 +51,7 @@
       margin-top: 15px;
     }
 
-    .control-group {
+    .control-group, .input-group {
       margin-bottom: 20px;
     }
 

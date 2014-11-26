@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails',          '4.1.4'
+gem 'rails',          '4.1.6'
 
 gem 'haml-rails'
 gem 'bootstrap-sass', '~> 3.2.0'
@@ -24,8 +24,11 @@ gem 'friendly_id'
 gem 'simple_token_authentication'
 
 gem 'thin'
-gem 'byebug',        group: :development
-gem 'spring',        group: :development
+
+group :development do
+  gem 'pry-byebug'
+  gem 'spring'
+end
 
 group :production do
   gem 'pg'
