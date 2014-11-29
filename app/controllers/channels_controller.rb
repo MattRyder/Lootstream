@@ -2,19 +2,20 @@ class ChannelsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @streams = []
-    streams = twitch.getStreams[:body]["streams"]
+    @streams = Channel.parse_channels(twitch.getStreams[:body]["streams"])
 
-    streams.each_with_index do |stream, i|
-      channel = stream['channel']
-      @streams[i] = { 
-        display_name: channel['display_name'],
-        viewers: channel['viewers'],
-        status: channel['status'],
-        preview: stream['preview'],
-        name: channel['name'],
-        game: channel['game']
-      }
+    games = twitch.getTopGames()
+    if games.present?
+      @games = games[:body]["top"].map{ |game| game["game"]["name"] }
+    end
+  end
+
+  def game_search
+    streams = twitch.searchStreams(query: params[:game_name])
+    @streams = Channel.parse_channels(streams[:body]["streams"])
+
+    respond_to do |format|
+      format.js { render 'channelfield' }
     end
   end
 
@@ -60,8 +61,9 @@ class ChannelsController < ApplicationController
     end
   end
 
+  private
+
   def channel_not_found
     raise ActionController::RoutingError.new('Channel not found!')
   end
-
 end

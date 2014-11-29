@@ -1,0 +1,9 @@
+- streams.each do |stream|
+  .stream
+    .col-xs-4
+      = link_to image_tag(stream[:preview]['medium'], class: 'img-responsive'), channel_path(stream[:name])
+    .col-xs-8
+      %h3.row= link_to stream[:name], channel_path(stream[:name])
+      %p.row= stream[:status]
+      %i.fa.fa-gamepad
+        .game-name= stream[:game]
