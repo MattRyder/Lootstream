@@ -1,6 +1,7 @@
 $(document).on('ready page:ready', function() {
 
   $('.sidebar-game-item').on('click', function(e) {
+    e.preventDefault();
     $.ajax({
       url: "/channels/game_search.js",
       type: 'POST',
