@@ -12,10 +12,14 @@ class ChannelsController < ApplicationController
 
   def game_search
     streams = twitch.searchStreams(query: params[:game_name])
-    @streams = Channel.parse_channels(streams[:body]["streams"])
+    @streams = Channel.parse_channels(streams[:body]["streams"]) rescue nil
 
     respond_to do |format|
-      format.js { render 'channelfield' }
+      if @streams.present?
+        format.js { render 'channelfield' }
+      else
+        format.js { render nothing: true }
+      end
     end
   end
 

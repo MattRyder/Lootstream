@@ -1,5 +1,7 @@
 .col-sm-3.game-filter
   %h3 Popular Games
+  .row
+    = search_field "game-search", "", placeholder: 'Search', class: 'form-control game-search'
   %ul
     - @games.each do |game|
       %li= link_to game, "#", class: 'sidebar-game-item'
