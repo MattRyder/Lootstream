@@ -44,7 +44,8 @@ class ChannelsController < ApplicationController
     @channel_data = {
       status: channel[:body]['status'],
       game: channel[:body]['game'],
-      background: channel[:body]['background']
+      background: channel[:body]['background'],
+      views: channel[:body]["views"]
     }
 
     render channel_not_found if stream[:response] == 404

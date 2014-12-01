@@ -9,6 +9,13 @@
 
 .row-ctr
   #channel-info
-    %h3= @channel_data[:status]
-    %i.fa.fa-gamepad
-    .game-name= @channel_data[:game]
+    .row
+      #ci-left
+        %i.fa.fa-gamepad
+        .game-name= @channel_data[:game]
+      #ci-right
+        %i.fa.fa-user
+          = " #{number_with_delimiter(@channel_data[:views], delimiter: ",")} Views"
+    .row
+      .col-xs-12
+        %h3= @channel_data[:status]

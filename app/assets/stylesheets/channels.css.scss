@@ -67,6 +67,15 @@
   .game-name {
     display: inline-block;
   }
+
+  #ci-left {
+    @extend .col-xs-6;
+  }
+
+  #ci-right {
+    @extend .col-xs-6;
+    text-align: right;
+  }
 }
 
 object {
