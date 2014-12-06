@@ -6,7 +6,13 @@ $(document).on('ready page:ready', function() {
       type: 'POST',
       data: { "game_name" : gameName }
     }).complete(function(data) {
-      eval(data.responseText);
+      if(!!data.responseText.trim()) {
+        $(".game-search").attr('placeholder', 'Search');
+        eval(data.responseText);
+        $("#search-title").text("Results for: "+gameName);
+      } else {
+        $(".game-search").attr('placeholder', 'No Streams Found!');
+      }
     });
   }
 

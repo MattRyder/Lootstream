@@ -2,7 +2,14 @@ class ChannelsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @streams = Channel.parse_channels(twitch.getStreams[:body]["streams"])
+    if cookies.signed[:last_search].present?
+      streams = twitch.searchStreams(query: cookies.signed[:last_search])
+      @streams = Channel.parse_channels(streams[:body]["streams"]) rescue nil
+    end
+
+    
+    @streams = Channel.parse_channels(twitch.getStreams[:body]["streams"]) if @streams.blank?
+    @search_title = cookies.signed[:last_search].present? ? "Results for: #{cookies.signed[:last_search]}" : "Popular Channels"
 
     games = twitch.getTopGames()
     if games.present?
@@ -16,12 +23,20 @@ class ChannelsController < ApplicationController
 
     respond_to do |format|
       if @streams.present?
+        @search_title = params[:game_name].present? ? "Results for: #{params[:game_name]}" : "Popular Channels"
+        cookies.signed[:last_search] = params[:game_name]
         format.js { render 'channelfield' }
       else
         format.js { render nothing: true }
       end
     end
   end
+
+  def unset_search
+    cookies.delete(:last_search) if cookies.signed[:last_search].present?
+    redirect_to action: :index
+  end
+
 
   def active_wager
     channel = Channel.find(params[:channel_id])

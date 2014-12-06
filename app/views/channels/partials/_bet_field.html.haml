@@ -2,9 +2,20 @@
   .row
     %h2.title= wager.question
   .row
-    .input-group.col-xs-6.col-xs-offset-3
-      %span.input-group-addon $
-      %input.form-control#amount{type: 'number', placeholder: 'Amount to bet', value: "#{@transaction.amount if @transaction}", disabled: (@transaction ? 'disabled' : nil)}
+    .col-xs-3.text-center
+      .row
+        %strong Minimum
+        %p= wager.min_amount
+
+    .col-xs-6
+      .input-group
+        %span.input-group-addon $
+        %input.form-control#amount{type: 'number', placeholder: 'Amount to bet', value: "#{@transaction.amount if @transaction}", disabled: (@transaction ? 'disabled' : nil)}
+
+    .col-xs-3.text-center
+      .row
+        %strong Maximum
+        %p= wager.max_amount
         
   .row.text-center.options
     - wager.wager_options.each do |option|
