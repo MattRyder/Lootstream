@@ -19,3 +19,6 @@
     .row
       .col-xs-12
         %h3= @channel_data[:status]
+
+:javascript
+  initIntervals("#{@wager.id if @wager}", "#{current_user.id}", "#{params[:id]}");

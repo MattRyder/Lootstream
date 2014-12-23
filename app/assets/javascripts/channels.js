@@ -30,7 +30,8 @@ $(document).on('ready page:ready', function() {
     $(this).val("");
   });
 
-  var wagerUpdate = function(channelSlug) {
+  // AJAX Update the current wager if Streamer changes it:
+  var wagerUpdate = function(channelSlug, wagerId, userId) {
     if(!channel_slug)
       return;
 
@@ -39,18 +40,18 @@ $(document).on('ready page:ready', function() {
       data: { "current_wager": $('.wager').data('wid') }
     }).complete(function(data) {
       eval(data.responseText);
-      if (data.responseText != " ") {
-        wagerPollInterval = setInterval(window.wagerPolling, 3000);
+      if (!!data.responseText.trim()) {
+        wagerPollInterval = setInterval(w, 3000);
       }
     });
-  }
+  };
 
   // Updates the wager odds etc
-  var wagerStatisticsUpdate = function(wagerId) {
+  var wagerStatisticsUpdate = function(wagerId, userId) {
     $.ajax({
       url: '/wagers/'+wagerId+'/realtime',
       dataType: 'JSON',
-      data: { uid : "#{current_user.id}" }
+      data: { uid : userId }
     }).success(function(data) {
       if(data.odds) {
         for(var i = 0; i < data.odds.length; i++) {
@@ -74,8 +75,12 @@ $(document).on('ready page:ready', function() {
     window.clearInterval(wagerUpdateInterval);
   })
 
-  if(window.location.pathname == '') {
-    //var wagerPollInterval = setInterval(wagerStatisticsUpdate, 3000);
-    //var wagerUpdateInterval = setInterval(wagerUpdate, 5000);
-  }
+  var initIntervals = function(wagerId, userID, chanSlug) {
+    if(window.location.pathname.match(/\/channels\/[A-z0-9_]+/)) {
+      // Hahahahaha, What the actual fuck am I doing here?
+      // TODO: Figure out a better way, than throwing everything to wagerUpdate()!!
+      var wagerPollInterval = setInterval(wagerStatisticsUpdate(wagerId, userId), 3000);
+      var wagerUpdateInterval = setInterval(wagerUpdate(chanSlug, wagerId, userId), 5000);
+    }
+  };
 });
