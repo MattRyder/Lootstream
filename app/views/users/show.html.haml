@@ -20,6 +20,8 @@
           =image_tag("#{t.won ? 'http://www.venomusa.biz/wp-content/uploads/2014/03/thumbs-up2.jpg' : 'http://www.psdgraphics.com/file/thumbs-down-button.jpg'}", class: 'img-responsive')
         .col-sm-7
           %h4= t.wager_option.wager.try(:question)
-          %h4= "You #{t.won ? 'won' : 'lost'} $#{t.display_amount}"
+          %h4
+            = "You #{t.won ? 'won' : 'lost'} $#{t.display_amount} on"
+            %span.option-text= t.wager_option.text
         .col-sm-2
           %p= t.created_at.strftime("%d %b %Y")
