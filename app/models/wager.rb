@@ -7,7 +7,9 @@ class Wager < ActiveRecord::Base
   accepts_nested_attributes_for :wager_options,
     reject_if: :all_blank, allow_destroy: true
 
-  scope :active, -> { where(active: true) }
+  validates :game, :question, :min_amount, :max_amount, presence: true
+
+  scope :active, -> { find_by(active: true) }
 
   def set_winner(option)
 

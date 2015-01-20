@@ -1,6 +1,7 @@
 @import "bootstrap";
 
 $standard-color: #6F256F;
+$standard-color-dark: #7c327c;
 $accent-color: lighten($standard-color, 17.5%);
 $bottom-border: 3px solid $accent-color;
 
@@ -14,4 +15,15 @@ $bottom-border: 3px solid $accent-color;
 .box {
   @include box;
   margin-bottom: 15px;
+}
+
+.btn-looted {
+  color: #FFF;
+  background: lighten($standard-color, 10%);
+  border-color: $standard-color-dark;
+
+  &:hover {
+    color: #FFF;
+    background: $standard-color;
+  }
 }

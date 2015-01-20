@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
   before_action :set_game, only: [:show, :edit, :update, :destroy, :game_info]
+  before_action :set_game_types, only: [:new, :edit]
 
   # GET /games
   def index
@@ -12,13 +13,11 @@ class GamesController < ApplicationController
 
   # GET /games/new
   def new
-    @game_types = Game.descendants.map(&:name) rescue []
     @game = Game.new
   end
 
   # GET /games/1/edit
   def edit
-    @game_types = Game.descendants.map(&:name) rescue []
   end
 
   # POST /games
@@ -60,12 +59,16 @@ class GamesController < ApplicationController
       @game = Game.find(params[:id])
     end
 
+    def set_game_types
+      @game_types = Game.descendants.map(&:name) rescue []
+    end
+
     def create_object
-      game_type = game_params[:type]
-      if Game.types.include? game_type
-        return game_type.constantize.new
+      game_type = game_params[:game_type]
+      if Game.types.include?(game_type)
+        return game_type.constantize.new(game_params)
       else
-        return Game.new
+        return Game.new(game_params)
       end
     end
 

@@ -50,6 +50,13 @@ class WagersController < ApplicationController
     render json: response
   end
 
+  def render_form
+    game = Game.find(params[:game_id])
+    game_name = game.game_type.tableize.singularize if game.present?
+    @partial_name = "wagers/game_forms/#{game_name}"
+    render 'wagers/game_forms/game_form'
+  end
+
   # GET /wagers/1
   # GET /wagers/1.json
   def show

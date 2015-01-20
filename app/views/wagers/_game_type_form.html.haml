@@ -1,6 +1,3 @@
-.help-block
-  First, choose your wager type from the dropdown below. We'll show you a description of how each wager is played.
-
 = simple_form_for(@wager, url: channel_wagers_path(params[:channel_id]),  html: { class: 'form-horizontal' }) do |f|
   = f.error_notification
   .row
@@ -8,12 +5,11 @@
     .col-xs-4
       = f.association :game, label_method: :name, include_blank: false, label: false
     .col-xs-3
-      = link_to "Choose ➿", "#", class: "btn btn-looted", id: "submit-type"
+      = link_to "Choose ➿", "#", class: "btn btn-looted"
 
 
   .well#game-description
 
-  #game-form
 
 :javascript
   var game_info = function() {

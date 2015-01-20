@@ -1,0 +1,2 @@
+:plain
+  $('#game-form').html("#{escape_javascript(render partial: @partial_name, locals: { channel_id: current_user.channel.id })}");
