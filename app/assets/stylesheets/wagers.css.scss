@@ -69,6 +69,13 @@
   }
 }
 
+.game-selector-row {
+  @extend .row;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin: 0;
+}
+
 .option-text {
   font-style: italic;
 }

@@ -51,8 +51,12 @@ class WagersController < ApplicationController
   end
 
   def render_form
+    @wager = Wager.new
+    2.times{ @wager.wager_options.build }
+
     game = Game.find(params[:game_id])
     game_name = game.game_type.tableize.singularize if game.present?
+    
     @partial_name = "wagers/game_forms/#{game_name}"
     render 'wagers/game_forms/game_form'
   end
@@ -65,8 +69,7 @@ class WagersController < ApplicationController
 
   # GET /wagers/new
   def new
-    @wager = Wager.new
-    2.times{ @wager.wager_options.build }
+    @games = Game.all
   end
 
   # GET /wagers/1/edit

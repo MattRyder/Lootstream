@@ -2,12 +2,6 @@
   = f.error_notification
   .col-xs-12.col-sm-5
     = f.input :question, required: true, placeholder: 'Question', label: false
-    .input-group
-      %span.input-group-addon $
-      = f.input :min_amount, as: :numeric, placeholder: 'Minimum Amount', label: false
-    .input-group
-      %span.input-group-addon $
-      = f.input :max_amount, as: :numeric, placeholder: 'Maximum Amount', label: false
 
   .col-xs-12.col-sm-7
     %h3 Wager Options
