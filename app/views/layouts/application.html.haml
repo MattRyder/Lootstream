@@ -20,6 +20,10 @@
       = render "#{user_signed_in? ? "active" : "inactive"}_nav"
 
 .container-fluid
-  %p.notice= notice
-  %p.alert= alert
+  - if notice.present?
+    .alert.alert-dismissible.alert-info{role: 'alert'}
+      = notice
+  - if alert.present?
+    .alert.alert-dismissible.alert-warning{role: 'alert'}
+      = alert
   = yield

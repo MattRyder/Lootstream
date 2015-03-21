@@ -6,5 +6,6 @@
     .row
       - view = params[:code] ? 'ajax_sign_up' : 'new_user'
       = render "devise/registrations/#{view}"
-    .row
-      = render 'devise/sessions/ajax_sign_in'
+    .registration.row
+      %h3.welcome Sign in
+      = render 'devise/sessions/sign_in_form', resource: User.new, resource_name: 'user'

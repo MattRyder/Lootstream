@@ -37,7 +37,7 @@
             %td= link_to 'View', wager
         %div{ class: "#{'wager-row' unless @last_wagers.present?}" }
       = link_to 'Back to channel', channel_path(params[:channel_id]), class: 'btn btn-default'
-      = link_to 'New Wager', new_channel_wager_path, class: 'btn btn-primary', :disabled => @active_wager ? 'disabled' : nil
+      = link_to 'New Wager', new_channel_wager_path, class: 'btn btn-looted', :disabled => @active_wager ? 'disabled' : nil
     
     %br
   - else

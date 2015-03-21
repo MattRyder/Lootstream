@@ -29,6 +29,7 @@ gem 'thin'
 group :development do
   gem 'pry-byebug'
   gem 'spring'
+  gem 'quiet_assets'
 end
 
 group :production do

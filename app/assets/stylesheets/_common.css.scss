@@ -23,6 +23,10 @@ $bottom-border: 3px solid $accent-color;
   border-color: $standard-color-dark;
   transition: background ease-in-out 0.25s, border ease-in-out 0.25s;
 
+  &:active {
+    color: #FFF;
+  }
+
   &:hover {
     color: #FFF;
     background: $standard-color;

@@ -9,7 +9,11 @@
     %p= "Total Wagered: #{number_to_currency(@total_wagered, unit: "$")}"
     %p= "Total Won: #{number_to_currency(@total_won, unit: "$")}"
     %p= "Total Lost: #{number_to_currency(@total_lost, unit: "$")}"
-    %p= "Return on Investment: #{(@total_won/@total_lost).round(2)}"
+    - if @roi.present?
+      %p= "Return on Investment: #{@roi}"
+  - if current_user.username != params[:id]
+    =render 'sidebar'
+
 
 
 .col-sm-8

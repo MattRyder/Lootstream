@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery-ui
+//= require jquery-ui/core
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require cocoon

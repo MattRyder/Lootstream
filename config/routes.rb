@@ -35,14 +35,14 @@ Rails.application.routes.draw do
     get 'info' => 'games#game_info', as: :info, on: :member
   end
 
-  resources :users, only: [:show] do
-    get 'auth' => 'users#auth', as: :auth, on: :collection
-  end
-
   devise_for :users, controllers: {
-    registrations: 'users/registrations',
-    sessions: 'users/sessions',
+    registrations: 'users/registrations'
   }
+
+  resources :users, only: [:show] do
+    get 'auth'    => 'users#auth', as: :auth, on: :collection
+    get "api_key" => "users#api_key", as: :api_key
+  end
 
   post '/place_bet' => 'wagers#place_bet', as: :place_bet
 end

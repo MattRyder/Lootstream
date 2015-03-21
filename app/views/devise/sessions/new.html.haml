@@ -1,5 +1,8 @@
-.registration
-  .row
-    %h3.welcome Sign in!
-  .row
-    = render 'sign_in_form'
+.col-xs-6.col-xs-offset-3
+  .registration
+    .row
+      %h3.welcome Sign in
+    .row
+      = render 'sign_in_form'
+
+  = render 'devise/registrations/new_user'
