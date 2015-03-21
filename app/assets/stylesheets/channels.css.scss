@@ -43,6 +43,7 @@
   @include box;
   @extend .row;
   margin: 15px 0;
+  word-wrap: break-word;
 
   &:hover {
     box-shadow: 0px 1px 5px rgba($standard-color,0.5)
