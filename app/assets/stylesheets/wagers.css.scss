@@ -38,6 +38,10 @@
   @include box;
   @extend .col-xs-12;
   @extend .col-sm-8, .col-sm-offset-2;
+
+  .left-column  { border-right: 1px solid rgba(0, 0, 0, 0.05); }
+  .right-column { border-left: 1px solid rgba(0, 0, 0, 0.05); }
+
   margin-top: 15px;
   form {
     h3 {
@@ -47,20 +51,12 @@
     
     .add-option { display: inline-block; }
 
-    input[type='submit'] {
-      margin-top: 15px;
-    }
-
     .control-group, .input-group {
       margin-bottom: 20px;
     }
 
     .btn-remove {
       padding-left: 0;
-    }
-
-    .btn-default {
-      margin-top: 15px;
     }
 
     .remove_fields i {

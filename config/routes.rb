@@ -18,9 +18,13 @@ Rails.application.routes.draw do
   end
 
   resources :channels do
-    resources :wagers, only: [:index, :new, :create]
-    get 'active'        => 'channels#active_wager',     as: :active
-    post 'game_search'  => 'channels#game_search',  as: :game_search, on: :collection
+
+    resources :wagers, only: [:index, :new, :create] do
+      post 'setup'     => 'wagers#new_wager_setup', as: :setup,        on: :collection
+    end
+
+    get  'active'       => 'channels#active_wager', as: :active
+    post 'game_search'  => 'channels#game_search' , as: :game_search,  on: :collection
     post 'unset_search' => 'channels#unset_search', as: :unset_search, on: :collection
   end
 

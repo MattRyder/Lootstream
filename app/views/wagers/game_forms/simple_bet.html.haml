@@ -1,0 +1,46 @@
+.wager-input
+  = simple_form_for(@wager, url: channel_wagers_path(params[:channel_id]),  html: { class: 'form-horizontal' }) do |f|
+    = f.error_notification
+    .col-xs-12.col-sm-5
+      %h3= "#{@game_name} Setup"
+    .col-xs-6.col-sm-7
+      %h3 Wager Options
+      .add-option
+        = link_to_add_association f, :wager_options, partial: "wagers/wager_options_fields", data: {'association-insertion-node' => '#options', 'association-insertion-position' => 'append'} do
+          %i.fa.fa-plus
+
+
+    = f.input :game_id, as: :hidden
+
+    .col-xs-12.col-sm-5.left-column
+      = f.input :question, required: true, placeholder: 'Question', label: false
+      .input-group
+        %span.input-group-addon $
+        = f.input :min_amount, as: :numeric, placeholder: 'Minimum Amount', label: false, input_html: {min: 1}
+      .input-group
+        %span.input-group-addon $
+        = f.input :max_amount, as: :numeric, placeholder: 'Maximum Amount', label: false, input_html: {min: 1}
+
+    .col-xs-12.col-sm-7.right-column
+      #options
+        = f.simple_fields_for :wager_options do |option|
+          = render 'wager_options_fields', f: option
+
+      .form-actions.pull-right
+        = link_to 'Back', channel_wagers_path(params[:channel_id]), class: 'btn btn-default'
+        = f.button :submit, class: 'btn btn-looted'
+
+:javascript
+  $(document).on("ready page:load", function() {
+    var shouldHideButton = function() {
+      if($('.nested-fields').length >= #{@max_options}) {
+        $('.add-option').hide();
+      } else {
+        $('.add-option').show();
+      }
+    };
+
+    $('#options').bind('cocoon:after-insert', shouldHideButton()).bind('cocoon:after-remove', shouldHideButton());
+  });
+
+

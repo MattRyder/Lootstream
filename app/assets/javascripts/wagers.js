@@ -24,22 +24,4 @@ $(document).on("ready page:load", function() {
       }
     });
   });
-
-  $("#submit-type").on("click", function(e) {
-    e.preventDefault();
-    $.ajax({
-      url: '/wagers/render_form.js',
-      data: { "game_id" : $("#wager_game_id").val() },
-      beforeSend: function(xhr, settings) {
-        $("#wager_game_id").attr("disabled", true);
-      }
-    }).success(function(data) {
-      eval(data);
-      $("#game-infographic").hide();
-      $("#game-description").hide();
-      $("#submit-type").hide();
-
-    });
-  });
-
 });

@@ -32,6 +32,12 @@
  body {
   font-family: 'Noto Sans', sans-serif !important;
 
+  a:not(.btn-looted) {
+    &, &:visited { color: lighten($standard-color, 10%); }
+    &:hover { color: $standard-color; }
+    &:active, &:focus { color: darken($standard-color, 10%); }
+  }
+
   .alert:empty {display: none;}
 
    /* LootStream Navbar */

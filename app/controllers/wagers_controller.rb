@@ -50,15 +50,16 @@ class WagersController < ApplicationController
     render json: response
   end
 
-  def render_form
+  def new_wager_setup
     @wager = Wager.new
     2.times{ @wager.wager_options.build }
 
     game = Game.find(params[:game_id])
     game_name = game.game_type.tableize.singularize if game.present?
-    
-    @partial_name = "wagers/game_forms/#{game_name}"
-    render 'wagers/game_forms/game_form'
+    @game_name = game.name
+    @max_options = game.max_options
+
+    render "wagers/game_forms/#{game_name}"
   end
 
   # GET /wagers/1
@@ -79,8 +80,11 @@ class WagersController < ApplicationController
   # POST /wagers
   # POST /wagers.json
   def create
+    @games = Game.all
     @wager = Wager.new(wager_params)
     @wager.channel = @channel
+
+    binding.pry
 
     respond_to do |format|
       if @wager.save

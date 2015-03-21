@@ -3,19 +3,19 @@
 
 .game-selector-row
   .col-xs-3#game-infographic
-  .col-xs-5#game-selector
-    = select_tag "wager_game_id", options_from_collection_for_select(@games, :id, :name), class: 'form-control'
-  .col-xs-3
-    = link_to "Choose ➿", "#", class: "btn btn-looted", id: "submit-type"
 
+  = simple_form_for "", url: setup_channel_wagers_path do |f|
+    .col-xs-5#game-selector
+      = f.input :game_id, as: :select, collection: @games, label_method: :name, value_method: :id, include_blank: :false, label: false, class: 'form-control'
+    .col-xs-3
+      = f.submit "Choose ➿", class: "btn btn-looted"
 
 .well#game-description
 
-#game-form
-
 :javascript
   var game_info = function() {
-    var game_id = $('select#wager_game_id').val()
+
+    var game_id = $('select#_game_id').val()
     $.ajax({
       url: '/games/'+game_id+'/info.json',
     }).success(function(data) {
@@ -23,7 +23,7 @@
     });
   };
 
-  $("select#wager_game_id").on('change', function() {
+  $('select#_game_id').on('change', function() {
     game_info();
   });
 
