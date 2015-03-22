@@ -7,7 +7,7 @@
       %li#stream-balance
         = link_to "Stream Balance: #{number_to_currency(@balance.balance, unit: '$')}", '#'
     %li
-      = link_to 'My Profile', user_path(current_user)
+      = link_to 'My Profile', user_path(id: current_user)
     %li
       = link_to destroy_user_session_path, method: :delete, class: 'logout' do
         %i.fa.fa-sign-out

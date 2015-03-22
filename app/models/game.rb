@@ -46,4 +46,8 @@ class Game < ActiveRecord::Base
 
     redeposit_amounts
   end
+
+  def partial_name
+    self.game_type.tableize.singularize
+  end
 end

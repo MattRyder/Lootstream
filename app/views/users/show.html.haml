@@ -1,31 +1,54 @@
-.col-sm-4
+.col-sm-4.col-sm-offset-1
   .row.box
     %h2= @user_data['display_name']
     %p
       Joined
       = current_user.created_at.strftime("%B %Y")
-  .row.box
-    %h3 Quick Stats
+  .row.box#stats
+    %h3 Quick Stats   
     %p= "Total Wagered: #{number_to_currency(@total_wagered, unit: "$")}"
     %p= "Total Won: #{number_to_currency(@total_won, unit: "$")}"
     %p= "Total Lost: #{number_to_currency(@total_lost, unit: "$")}"
     - if @roi.present?
       %p= "Return on Investment: #{@roi}"
   - if current_user.username != params[:id]
-    =render 'sidebar'
+    .row
+      .box
+        %ul
+          %li= link_to "Password", edit_user_registration_path
+          %li= link_to "Developer", "#", data: {toggle: "modal", target: "#api-key"}
 
 
 
-.col-sm-8
+.col-sm-6
   - @transactions.reverse.each do |t|
     .box
       .row
-        .col-sm-3
+        .col-xs-3.col-md-1
           =image_tag("#{t.won ? 'http://www.venomusa.biz/wp-content/uploads/2014/03/thumbs-up2.jpg' : 'http://www.psdgraphics.com/file/thumbs-down-button.jpg'}", class: 'img-responsive')
-        .col-sm-7
+        .col-xs-7
           %h4= t.wager_option.wager.try(:question)
           %h4
             = "You #{t.won ? 'won' : 'lost'} $#{t.display_amount} on"
             %span.option-text= t.wager_option.text
-        .col-sm-2
+        .col-xs-2
           %p= t.created_at.strftime("%d %b %Y")
+
+#api-key.modal.fade
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} ×
+        %h4.modal-title Lootstream API Key
+      .modal-body
+        %p Below is your API key, do not share this with anybody else!
+        = text_field_tag "api_key", current_user.api_key, disabled: true, placeholder: "No Key Present", class: "form-control"
+        = link_to "Generate New Key", "#", class: "btn btn-looted"
+      .modal-footer
+        %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
+
+:javascript
+  $(document).on("ready page:load", function() {
+
+  });

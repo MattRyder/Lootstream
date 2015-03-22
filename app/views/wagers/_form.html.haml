@@ -6,7 +6,7 @@
 
   = simple_form_for "", url: setup_channel_wagers_path do |f|
     .col-xs-5#game-selector
-      = f.input :game_id, as: :select, collection: @games, label_method: :name, value_method: :id, include_blank: :false, label: false, class: 'form-control'
+      = f.input :game_id, as: :select, collection: @games, label_method: :name, value_method: :id, include_blank: false, label: false, class: 'form-control'
     .col-xs-3
       = f.submit "Choose ➿", class: "btn btn-looted"
 

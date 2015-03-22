@@ -55,11 +55,15 @@ class WagersController < ApplicationController
     2.times{ @wager.wager_options.build }
 
     game = Game.find(params[:game_id])
-    game_name = game.game_type.tableize.singularize if game.present?
-    @game_name = game.name
-    @max_options = game.max_options
+    if game.present?
+      @game_name = game.name
+      @max_options = game.max_options
+      @wager.game = game
 
-    render "wagers/game_forms/#{game_name}"
+      render "wagers/game_forms/#{game.partial_name}"
+    else
+      raise ActionController::RoutingError("Failed to find game type")
+    end
   end
 
   # GET /wagers/1
@@ -91,7 +95,7 @@ class WagersController < ApplicationController
         format.html { redirect_to @channel, notice: 'Wager was successfully created.' }
         format.json { render @wager, status: :created }
       else
-        format.html { render :new }
+        format.html { render "wagers/game_forms/#{@wager.game.partial_name}" }
         format.json { render json: @wager.errors, status: :unprocessable_entity }
       end
     end

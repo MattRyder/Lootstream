@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141222183755) do
+ActiveRecord::Schema.define(version: 20150322005544) do
 
   create_table "balances", force: true do |t|
     t.integer  "user_id"
@@ -83,6 +83,8 @@ ActiveRecord::Schema.define(version: 20141222183755) do
     t.datetime "updated_at"
     t.string   "username"
     t.string   "slug"
+    t.string   "api_key"
+    t.datetime "api_key_created_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

@@ -11,6 +11,9 @@ class User < ActiveRecord::Base
 
   before_create :gen_token
 
+  extend FriendlyId
+  friendly_id :username, use: :slugged
+
   # Validation
   #validates_presence_of :access_token
 

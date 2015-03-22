@@ -12,12 +12,14 @@ class UsersController < ApplicationController
     @transactions = current_user.transactions
     if @transactions.present?
       @total_wagered = @transactions.map(&:amount).reduce(:+)
-      @total_won = @transactions.select{|t| t.won }.map(&:amount).reduce(:+)
-      @total_lost = @transactions.select{|t| !t.won }.map(&:amount).reduce(:+)
-      if @total_won > @total_lost
-        @roi = (@total_won / @total_lost).round(2)
+      @total_won = @transactions.select{|t| t.won }.map(&:amount).reduce(:+) rescue 0
+      @total_lost = @transactions.select{|t| !t.won }.map(&:amount).reduce(:+) rescue 0
+
+      if (@total_lost.present? && @total_won.present?)
+        @roi =  (@total_won > @total_lost) ? (@total_won / @total_lost) : (@total_lost / @total_won)
+        @roi = @roi.round(2)
       else
-        @roi = (@total_lost / @total_won).round(2)
+        @roi = "N/A"
       end
     else
       @total_wagered = @total_won = @total_lost = 0
