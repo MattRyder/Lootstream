@@ -38,8 +38,34 @@
   background-image: url('https://camo.githubusercontent.com/f1266002daa15b9aeeb5ab511afef6aa4faffdb5/687474703a2f2f7474762d6170692e73332e616d617a6f6e6177732e636f6d2f6173736574732f636f6e6e6563745f6c696768742e706e67');
 }
 
+@mixin glyphicon-wager {
+  font-size: 2em;
+  position: relative !important;
+  top: 50% !important;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(65%);
+  padding-left: 25px;
+}
+
+.glyphicon-wager-won {
+  @include glyphicon-wager;
+  @extend .glyphicon-thumbs-up;
+  color: #25be25;
+}
+
+.glyphicon-wager-lost {
+  @include glyphicon-wager;
+  @extend .glyphicon-thumbs-down;
+  color: #FF3232;
+}
+
 #edit-user-box {
   @include box;
   @extend .col-xs-8, .col-xs-offset-2;
   @extend .col-md-6, .col-md-offset-3;
+
+  input {
+    margin-top: 15px;
+  }
 }

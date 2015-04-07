@@ -2,7 +2,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
   def change
     create_table(:users) do |t|
 
-      ## Betstream Userdata
+      ## Lootstream Userdata
       t.string :access_token
       
       ## Database authenticatable

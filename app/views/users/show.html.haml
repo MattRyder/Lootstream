@@ -25,7 +25,7 @@
     .box
       .row
         .col-xs-3.col-md-1
-          =image_tag("#{t.won ? 'http://www.venomusa.biz/wp-content/uploads/2014/03/thumbs-up2.jpg' : 'http://www.psdgraphics.com/file/thumbs-down-button.jpg'}", class: 'img-responsive')
+          %span.glyphicon{class: "#{t.won ? 'glyphicon-wager-won' : 'glyphicon-wager-lost'}"}
         .col-xs-7
           %h4= t.wager_option.wager.try(:question)
           %h4
@@ -43,8 +43,11 @@
         %h4.modal-title Lootstream API Key
       .modal-body
         %p Below is your API key, do not share this with anybody else!
-        = text_field_tag "api_key", current_user.api_key, disabled: true, placeholder: "No Key Present", class: "form-control"
-        = link_to "Generate New Key", "#", class: "btn btn-looted"
+        .row
+          .col-xs-8
+            = text_field_tag "api_key", current_user.api_key, disabled: true, placeholder: "No Key Present", class: "form-control"
+          .col-xs-4
+            = link_to "Generate New Key", "#", class: "btn btn-looted"
       .modal-footer
         %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
 

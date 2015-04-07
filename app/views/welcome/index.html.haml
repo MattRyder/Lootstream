@@ -1,7 +1,7 @@
-.col-xs-6
-  %h2 Earn money watching livestreams
-  %p Yep, that's the strapline
-.col-xs-4.authentication
+.col-xs-12.col-sm-6
+  %h2 Bringing the metagame to Livestreams
+  %p Lootstream is a service that provides gambling services to livestreamed entertainment.
+.col-xs-12.col-sm-4.authentication
   - unless user_signed_in?
     .row
       - view = params[:code] ? 'ajax_sign_up' : 'new_user'
