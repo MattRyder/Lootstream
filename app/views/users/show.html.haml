@@ -47,11 +47,19 @@
           .col-xs-8
             = text_field_tag "api_key", current_user.api_key, disabled: true, placeholder: "No Key Present", class: "form-control"
           .col-xs-4
-            = link_to "Generate New Key", "#", class: "btn btn-looted"
+            = link_to "Generate New Key", "#", class: "btn btn-looted", id: "btn-generate-key"
+        .help-block Please note, generating a new key will invalidate any calls with the previous key.
       .modal-footer
         %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
 
 :javascript
   $(document).on("ready page:load", function() {
-
+    $("#btn-generate-key").on("click", function() {
+      $.ajax({
+        url: "#{user_api_key_path(current_user)}",
+        type: "POST"
+      }).success(function(data) {
+        $("#api_key").val(data.key);
+      })
+    });
   });

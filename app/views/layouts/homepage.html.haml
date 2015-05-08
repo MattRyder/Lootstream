@@ -1,0 +1,29 @@
+!!!
+%html{:lang => 'en'}
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{:name => 'viewport', :content => 'width=device-width, initial-scale=1'}/
+    %title LootStream
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  %body{class: "#{params[:action]}"}
+
+  %nav.navbar.navbar-controls{role: 'navigation'}
+    .container-fluid
+      .navbar-header
+        %button.navbar-toggle{type: 'button', "data-toggle" => 'collapse', "data-target" => '#navi-collapse'}
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+        = link_to 'LootStream', root_path, :class => 'navbar-logo'
+      = render "#{user_signed_in? ? "active" : "inactive"}_nav"
+
+.container-fluid
+  - if notice.present?
+    .alert.alert-dismissible.alert-info{role: 'alert'}
+      = notice
+  - if alert.present?
+    .alert.alert-dismissible.alert-warning{role: 'alert'}
+      = alert
+  = yield

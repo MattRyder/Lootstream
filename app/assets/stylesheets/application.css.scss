@@ -34,6 +34,7 @@
 
   a:not(.btn-looted) {
     &, &:visited, &:active, &:focus { color: lighten($standard-color, 10%); }
+    &:focus { outline: 0; }
     &:hover { color: $standard-color; }
   }
 
@@ -42,7 +43,7 @@
    /* LootStream Navbar */
    .navbar-controls {
     @extend .navbar-default;
-    border-bottom: 0;
+    border: 0;
     border-radius: 0;
     margin-bottom: 0;
     background-color: transparent;

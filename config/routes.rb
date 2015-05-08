@@ -18,7 +18,6 @@ Rails.application.routes.draw do
   end
 
   resources :channels do
-
     resources :wagers, only: [:index, :new, :create] do
       post 'setup'     => 'wagers#new_wager_setup', as: :setup,        on: :collection
     end
@@ -28,7 +27,9 @@ Rails.application.routes.draw do
     post 'unset_search' => 'channels#unset_search', as: :unset_search, on: :collection
   end
 
+  # THESE NEED NESTING UNDER APPROPRIATE RESOURCES:
   post '/distribute_winnings' => "wagers#distribute_winnings", as: :wager_distribute
+  post '/place_bet' => 'wagers#place_bet', as: :place_bet
 
   resources :wagers, only: [:show, :edit, :update, :destroy] do
     get 'realtime'    => 'wagers#process_realtime', as: :realtime
@@ -44,9 +45,8 @@ Rails.application.routes.draw do
   }
 
   resources :users, only: [:show] do
-    get 'auth'    => 'users#auth', as: :auth, on: :collection
-    get "api_key" => "users#api_key", as: :api_key
+    get  "auth"    => 'users#auth',         as: :auth,   on: :collection
+    post "api_key" => "users#generate_key", as: :api_key
   end
 
-  post '/place_bet' => 'wagers#place_bet', as: :place_bet
 end

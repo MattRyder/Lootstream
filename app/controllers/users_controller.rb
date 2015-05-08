@@ -24,7 +24,15 @@ class UsersController < ApplicationController
     else
       @total_wagered = @total_won = @total_lost = 0
     end
-
   end
+
+  # Generates an API Key for the current_user
+  def generate_key
+    current_user.api_key = SecureRandom.hex(32)
+    respond_to do |format|
+      format.json { render json: {saved: current_user.save, key: current_user.api_key} }
+    end
+  end
+
 
 end

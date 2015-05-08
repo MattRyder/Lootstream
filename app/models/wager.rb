@@ -33,6 +33,14 @@ class Wager < ActiveRecord::Base
     end
   end
 
+  def suspended?
+    self.suspended_at.present? && self.active == false
+  end
+
+  def winner
+    return self.winning_option.present? ? WagerOption.find(winning_option) : nil
+  end
+
   def place_bet(wager_option_id, current_user, amount)
     amount = amount.to_i
     wager = WagerOption.find(wager_option_id).wager

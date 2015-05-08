@@ -8,6 +8,20 @@
   .options {
     margin-top: 10px;
     margin-bottom: 10px;
+
+    .btn-wager, .btn-wager-success {
+      transition: background ease-in-out 0.25s;
+      border: 1px solid $standard-color;
+
+      &:hover { background: #f9eef9; }
+
+      a, a:hover a:active, a:focus, a:visited { text-decoration: none; }
+    }
+
+    .btn-wager-winner, .btn-wager-success:hover {
+      color: darker($standard-color, 25%);
+      background: #afffb3 !important;
+    }
   }
 }
 
