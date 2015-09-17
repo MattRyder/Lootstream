@@ -20,5 +20,6 @@
       .col-xs-12
         %h3= @channel_data[:status]
 
-:javascript
-  initIntervals("#{@wager.id if @wager}", "#{current_user.id}", "#{params[:id]}");
+- if @wager.present? && current_user.present? 
+  :javascript
+    initIntervals("#{@wager.id if @wager}", "#{current_user.id}", "#{params[:id]}");

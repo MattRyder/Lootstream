@@ -23,7 +23,7 @@ Rails.application.routes.draw do
     end
 
     get  'active'       => 'channels#active_wager', as: :active
-    post 'game_search'  => 'channels#game_search' , as: :game_search,  on: :collection
+    get 'game_search'  => 'channels#game_search' , as: :game_search,  on: :collection
     post 'unset_search' => 'channels#unset_search', as: :unset_search, on: :collection
   end
 

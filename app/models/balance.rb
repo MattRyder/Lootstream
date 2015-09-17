@@ -7,4 +7,8 @@ class Balance < ActiveRecord::Base
   def change(amount)
     self.update_attributes(balance: self.balance + amount)
   end
+
+  def display_value
+    self.balance.round(2)
+  end
 end

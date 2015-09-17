@@ -2,11 +2,11 @@ class UsersController < ApplicationController
 
   # Redirect to the Twitch Auth endpoint
   def auth
-    redirect_to twitch.getLink
+    redirect_to twitch.link
   end
 
   def show
-    twitch_data = twitch_auth(current_user.access_token).getYourUser
+    twitch_data = twitch_auth(current_user.access_token).your_user
     @user_data = twitch_data[:body]
 
     @transactions = current_user.transactions

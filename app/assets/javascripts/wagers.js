@@ -1,7 +1,14 @@
-$(document).on("ready page:load", function() {
+$(document).ready(function() {
 
-  $(".option").click(function() {
-    var element = $(this), amount_data = $('#amount').val();
+  $(".option").click(function(e) {
+    e.preventDefault();
+    var element = $(this), amount_data = $('#amount').val(),
+        amount_val = parseFloat(amount_data);
+
+    if(isNaN(amount_val) || amount_val <= 0) {
+      return false;
+    }
+
     $.ajax({
       type: 'POST',
       url: '/place_bet',

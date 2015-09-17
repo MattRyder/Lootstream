@@ -12,9 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.turbolinks
 //= require jquery-ui/core
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require cocoon
-//= require jquery.viewportchecker
 //= require_tree .

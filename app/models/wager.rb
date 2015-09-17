@@ -63,7 +63,7 @@ class Wager < ActiveRecord::Base
         user_id: current_user.id)
 
       bal.change(-amount)
-      return { success: true, new_balance: bal.balance }
+      return { success: true, new_balance: bal.display_value }
     else
       return { success: false, error_message: error_message}
     end

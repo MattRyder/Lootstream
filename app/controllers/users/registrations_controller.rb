@@ -10,8 +10,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     resource.access_token = session[:access_token]
     # setup the channel for this user, if not done so already
-    user = twitch_auth(resource.access_token).getYourUser()
-    c_name = twitch.getChannel(user[:body]['name'])
+    user = twitch_auth(resource.access_token).your_user
+    c_name = twitch.channel(user[:body]['name'])
     channel = Channel.find_or_create_by(name: c_name[:body]['name'])
     
     if resource.channel.blank?

@@ -28,7 +28,6 @@
   :javascript
     $('.btn').click(function() {
       var sel_opt = $(this).find("a").data("id");
-      debugger;
       $.ajax({
         url: '/distribute_winnings',
         type: 'POST',

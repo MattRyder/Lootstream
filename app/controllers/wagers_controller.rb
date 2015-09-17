@@ -41,7 +41,8 @@ class WagersController < ApplicationController
         if transaction
           response[:wager_state] = {
             state: transaction.wager_option.won ? "won" : "lost",
-            winopt: @wager.winning_option
+            winopt: @wager.winning_option,
+            balance: current_user.channel_balance(@wager.channel).display_value
           }
         end
       end
@@ -87,8 +88,6 @@ class WagersController < ApplicationController
     @games = Game.all
     @wager = Wager.new(wager_params)
     @wager.channel = @channel
-
-    binding.pry
 
     respond_to do |format|
       if @wager.save

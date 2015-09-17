@@ -7,6 +7,9 @@ gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
 gem 'font-awesome-rails'
 
+gem 'turbolinks'
+
+
 gem 'sqlite3', group: :development
 
 gem 'sass-rails',     '~> 4.0.3'
@@ -15,9 +18,10 @@ gem 'coffee-rails',   '~> 4.0.0'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'turbolinks'
+gem 'jquery-turbolinks'
 gem 'chart-js-rails'
 
-gem 'twitch'
+gem 'twitch',         '~> 0.1.1'
 gem 'devise'
 gem 'simple_form'
 gem 'cocoon'
@@ -25,7 +29,7 @@ gem 'friendly_id'
 
 gem 'simple_token_authentication'
 
-gem 'thin'
+gem 'puma'
 
 group :development do
   gem 'pry-byebug'
