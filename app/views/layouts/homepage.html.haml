@@ -7,7 +7,7 @@
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
-  %body{class: "#{params[:action]}"}
+  %body
 
   %nav.navbar.navbar-controls{role: 'navigation'}
     .container-fluid
@@ -20,10 +20,6 @@
       = render "#{user_signed_in? ? "active" : "inactive"}_nav"
 
 .container-fluid
-  - if notice.present?
-    .alert.alert-dismissible.alert-info{role: 'alert'}
-      = notice
-  - if alert.present?
-    .alert.alert-dismissible.alert-warning{role: 'alert'}
-      = alert
+  = render "flash_notices"
+  
   = yield

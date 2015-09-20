@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20150322005544) do
 
-  create_table "balances", force: true do |t|
+  create_table "balances", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "channel_id"
     t.decimal  "balance",    precision: 8, scale: 2
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20150322005544) do
   add_index "balances", ["channel_id"], name: "index_balances_on_channel_id"
   add_index "balances", ["user_id"], name: "index_balances_on_user_id"
 
-  create_table "channels", force: true do |t|
+  create_table "channels", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 20150322005544) do
 
   add_index "channels", ["slug"], name: "index_channels_on_slug", unique: true
 
-  create_table "friendly_id_slugs", force: true do |t|
+  create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",                      null: false
     t.integer  "sluggable_id",              null: false
     t.string   "sluggable_type", limit: 50
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 20150322005544) do
   add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
 
-  create_table "games", force: true do |t|
+  create_table "games", force: :cascade do |t|
     t.string   "name"
     t.integer  "max_options"
     t.datetime "created_at"
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 20150322005544) do
     t.text     "description"
   end
 
-  create_table "transactions", force: true do |t|
+  create_table "transactions", force: :cascade do |t|
     t.decimal  "amount"
     t.integer  "user_id"
     t.integer  "wager_option_id"
@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 20150322005544) do
   add_index "transactions", ["user_id"], name: "index_transactions_on_user_id"
   add_index "transactions", ["wager_option_id"], name: "index_transactions_on_wager_option_id"
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "access_token"
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(version: 20150322005544) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   add_index "users", ["slug"], name: "index_users_on_slug", unique: true
 
-  create_table "wager_options", force: true do |t|
+  create_table "wager_options", force: :cascade do |t|
     t.string   "text"
     t.integer  "wager_id"
     t.datetime "created_at"
@@ -100,7 +100,7 @@ ActiveRecord::Schema.define(version: 20150322005544) do
 
   add_index "wager_options", ["wager_id"], name: "index_wager_options_on_wager_id"
 
-  create_table "wagers", force: true do |t|
+  create_table "wagers", force: :cascade do |t|
     t.string   "question"
     t.decimal  "min_amount"
     t.decimal  "max_amount"

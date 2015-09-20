@@ -1,0 +1,13 @@
+- if flash.now[:notice].present?
+  .alert.alert-dismissible.alert-info{role: 'alert'}
+    %button{type: 'alert', class: 'close', "data-dismiss" => "alert"}
+      %span{"aria-hidden" => "true"}✖
+    %strong Information
+    %span= flash.now[:notice]
+    = notice
+- if flash.now[:alert].present?
+  .alert.alert-dismissible.alert-danger{role: 'alert'}
+    %button{type: 'alert', class: 'close', "data-dismiss" => "alert"}
+      %span{"aria-hidden" => "true"}✖
+    %strong Error
+    %span= flash.now[:alert]

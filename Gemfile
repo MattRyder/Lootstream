@@ -17,7 +17,6 @@ gem 'uglifier',       '>= 1.3.0'
 gem 'coffee-rails',   '~> 4.0.0'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'turbolinks'
 gem 'jquery-turbolinks'
 gem 'chart-js-rails'
 
@@ -25,7 +24,7 @@ gem 'twitch',         '~> 0.1.1'
 gem 'devise'
 gem 'simple_form'
 gem 'cocoon'
-gem 'friendly_id'
+gem 'stringex'
 
 gem 'simple_token_authentication'
 

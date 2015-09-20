@@ -14,9 +14,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
     c_name = twitch.channel(user[:body]['name'])
     channel = Channel.find_or_create_by(name: c_name[:body]['name'])
     
-    if resource.channel.blank?
-      resource.update(channel: channel)
-    end
+    resource.update(channel: channel) if resource.channel.blank?
+    resource.update(username: user[:body]["name"]) if resource.username.blank?
   end
 
 end

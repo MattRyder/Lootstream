@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :set_user, only: [:show]
 
   # Redirect to the Twitch Auth endpoint
   def auth
@@ -32,6 +33,13 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.json { render json: {saved: current_user.save, key: current_user.api_key} }
     end
+  end
+
+private
+
+  def set_user
+    @user = User.find_by(slug: params[:id])
+    render file: "public/404.html", status: :not_found if @user.blank?
   end
 
 

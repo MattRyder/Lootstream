@@ -11,8 +11,7 @@ class User < ActiveRecord::Base
 
   before_create :gen_token
 
-  extend FriendlyId
-  friendly_id :username, use: :slugged
+  acts_as_url :username, url_attribute: :slug
 
   # Validation
   #validates_presence_of :access_token
@@ -24,6 +23,10 @@ class User < ActiveRecord::Base
     balance = self.balances.find_or_create_by(channel: channel) do |s|
       s.balance = 100
     end
+  end
+
+  def to_param
+    username
   end
 
 private

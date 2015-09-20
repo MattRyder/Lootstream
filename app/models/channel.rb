@@ -1,7 +1,6 @@
 class Channel < ActiveRecord::Base
- 
-  extend FriendlyId
-  friendly_id :name, use: :slugged
+
+  acts_as_url :name, url_attribute: :slug
 
   has_many :balances
   has_many :wagers
@@ -20,6 +19,10 @@ class Channel < ActiveRecord::Base
       }
     end
     stream_data
+  end
+
+  def to_param
+    name
   end
 
 end

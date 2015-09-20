@@ -11,5 +11,9 @@ module ApplicationHelper
   def devise_mapping
     @devise_mapping ||= Devise.mappings[:user]
   end
+
+  def channel_view?
+    current_page?(controller: "channels", action: "show")
+  end
     
 end

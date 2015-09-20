@@ -1,7 +1,7 @@
 .collapse.navbar-collapse#navi-collapse
   %ul.nav.navbar-nav
     %li= link_to 'Games', channels_path
-    %li= link_to 'Wagers', channel_wagers_path(params[:id]) if params[:id]
+    %li= link_to 'Wagers', channel_wagers_path(params[:id]) if channel_view?
   %ul.nav.navbar-nav.navbar-right
     -if @channel && @balance
       %li#stream-balance
