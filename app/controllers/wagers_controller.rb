@@ -1,6 +1,6 @@
 class WagersController < ApplicationController
+  before_action :set_channel, only: [:index, :create, :show, :active_wager]
   before_action :set_wager, only: [:show, :edit, :update, :destroy]
-  before_action :get_channel, only: [:index, :create, :active_wager]
 
   # GET /wagers
   # GET /wagers.json
@@ -56,15 +56,13 @@ class WagersController < ApplicationController
     2.times{ @wager.wager_options.build }
 
     game = Game.find(params[:game_id])
-    if game.present?
-      @game_name = game.name
-      @max_options = game.max_options
-      @wager.game = game
+    raise_404 if !game.present?
 
-      render "wagers/game_forms/#{game.partial_name}"
-    else
-      raise ActionController::RoutingError("Failed to find game type")
-    end
+    @game_name = game.name
+    @max_options = game.max_options
+    @wager.game = game
+
+    render "wagers/game_forms/#{game.partial_name}"
   end
 
   # GET /wagers/1
@@ -127,11 +125,11 @@ class WagersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_wager
-      @wager = Wager.find(params[:id])
+      @wager = @channel.wagers.find(params[:id])
     end
 
-    def get_channel
-      @channel = Channel.friendly.find(params[:channel_id])
+    def set_channel
+      @channel = Channel.find_by(name: params[:channel_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

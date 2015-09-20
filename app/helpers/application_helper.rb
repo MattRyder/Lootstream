@@ -13,7 +13,7 @@ module ApplicationHelper
   end
 
   def channel_view?
-    current_page?(controller: "channels", action: "show")
+    current_page?(controller: "/channels", action: "show")
   end
     
 end

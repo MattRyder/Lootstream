@@ -39,33 +39,28 @@ var renderGameSearch = function(gameName) {
 
 var initIntervals = function(wagerId, userId, chanSlug) {
   if(window.location.pathname.match(/\/channels\/[A-z0-9_]+/)) {
-    // Hahahahaha, What the actual fuck am I doing here?
-    // TODO: Figure out a better way, than throwing everything to wagerUpdate()!!
-    window["wagerPollInterval"] = setInterval(function() { wagerStatisticsUpdate(wagerId, userId) }, 3000);
-    window["wagerUpdateInterval"] = setInterval(function() { wagerUpdate(chanSlug, wagerId, userId) }, 5000);
+    window["wagerPollInterval"] = setInterval(function() {
+      wagerStatisticsUpdate(chanSlug, wagerId, userId);
+    }, 5000);
   }
 };
 
 // AJAX Update the current wager if Streamer changes it:
-var wagerUpdate = function(channelSlug, wagerId, userId) {
+// Updates the wager odds etc
+var wagerStatisticsUpdate = function(channelSlug, wagerId, userId) {
   if(!channelSlug)
     return;
 
+  // TODO: Replace with one AJAX call:
   $.ajax({
     url: "/channels/"+channelSlug+"/active.js",
     data: { "current_wager": $('.wager').data('wid') }
-  }).complete(function(data) {
+  }).success(function(data) {
     eval(data.responseText);
-    if (!!data.responseText.trim()) {
-      wagerPollInterval = setInterval(function() { wagerStatisticsUpdate(wagerId, userId) }, 3000);
-    }
   });
-};
 
-// Updates the wager odds etc
-var wagerStatisticsUpdate = function(wagerId, userId) {
   $.ajax({
-    url: '/wagers/'+wagerId+'/realtime',
+    url: '/channels/'+channelSlug+'/wagers/'+wagerId+'/realtime',
     dataType: 'JSON',
     data: { uid : userId }
   }).success(function(data) {

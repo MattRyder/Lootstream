@@ -14,12 +14,12 @@
           %td= @active_wager.question
           %td= number_to_currency(@active_wager.min_amount, unit: '$')
           %td= number_to_currency(@active_wager.max_amount, unit: '$')
-          %td= link_to 'View', @active_wager
+          %td= link_to 'View', channel_wager_path(@channel, @active_wager)
 
 
   - if @last_wagers
     .box
-      %h3 Last Five Wagers
+      %h3 Wager History
       %table
         %tr
           %th Game Type
@@ -34,7 +34,7 @@
             %td= wager.question
             %td= number_to_currency(wager.min_amount, unit: '$')
             %td= number_to_currency(wager.max_amount, unit: '$')
-            %td= link_to 'View', wager
+            %td= link_to 'View', channel_wager_path(@channel, wager)
         %div{ class: "#{'wager-row' unless @last_wagers.present?}" }
       = link_to 'Back to channel', channel_path(params[:channel_id]), class: 'btn btn-default'
       = link_to 'New Wager', new_channel_wager_path, class: 'btn btn-looted', :disabled => @active_wager ? 'disabled' : nil

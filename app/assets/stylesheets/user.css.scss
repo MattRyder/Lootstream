@@ -39,24 +39,19 @@
 }
 
 @mixin glyphicon-wager {
-  font-size: 2em;
-  position: relative !important;
-  top: 50% !important;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(65%);
-  padding-left: 25px;
+  font-size: 1.75em;
+  //padding-top: 25px;
 }
 
 .glyphicon-wager-won {
   @include glyphicon-wager;
-  @extend .glyphicon-thumbs-up;
+  @extend .glyphicon-ok-circle;
   color: #25be25;
 }
 
 .glyphicon-wager-lost {
   @include glyphicon-wager;
-  @extend .glyphicon-thumbs-down;
+  @extend .glyphicon-remove-circle;
   color: #FF3232;
 }
 

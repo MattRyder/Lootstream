@@ -1,20 +1,11 @@
-.wager.wager-show.animated.slideInDown{style: "margin-top: 50px;", class: "game-#{@wager.game.id}", data: { wid: @wager.id } }
+.wager.wager-show{style: "margin-top: 50px;", class: "game-#{@wager.game.id}", data: { wid: @wager.id } }
   .row
-    %h2.title= @wager.question
-  .row
-    .col-xs-3.text-center
-      .row
-        %strong Minimum
-        %p= @wager.min_amount
-
-    .col-xs-3.text-center
-      .row
-        %strong Maximum
-        %p= @wager.max_amount
+    .col-xs-12
+      %h2.title= @wager.question
         
-  .row.text-center.options
+  .row.options
     - @wager.wager_options.each do |option|
-      .col-xs-2.col-sm-3.col-md-4
+      .option
         .btn.btn-wager-success.btn-lg{class: "#{'btn-wager-winner' if @wager.suspended? && @wager.winner == option}"}
           = link_to option.text, "#", data: { id: "#{option.id}"}
         - if @wager.suspended?

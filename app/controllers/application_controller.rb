@@ -20,6 +20,10 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def raise_404
+    render file: "public/404.html", status: :not_found
+  end
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) { |u|
       u.permit(:email, :access_token, :password, :password_confirmation)

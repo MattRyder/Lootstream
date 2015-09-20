@@ -38,8 +38,8 @@ class UsersController < ApplicationController
 private
 
   def set_user
-    @user = User.find_by(slug: params[:id])
-    render file: "public/404.html", status: :not_found if @user.blank?
+    @user = User.find_by(username: params[:id])
+    raise_404 if @user.blank?
   end
 
 

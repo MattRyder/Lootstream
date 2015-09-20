@@ -20,8 +20,5 @@ module Lootstream
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
     config.autoload_paths += %W(#{config.root}/lib/classes)
-
-    require Rails.root.join("lib/classes/custom_public_exceptions")
-    config.exceptions_app = CustomPublicExceptions.new(Rails.public_path)
   end
 end

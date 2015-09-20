@@ -18,7 +18,6 @@ gem 'coffee-rails',   '~> 4.0.0'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'jquery-turbolinks'
-gem 'chart-js-rails'
 
 gem 'twitch',         '~> 0.1.1'
 gem 'devise'

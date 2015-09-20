@@ -27,6 +27,12 @@
 
 .wager-show {
   @include box;
+  h2 { text-align: left; }
+
+  .option {
+    float: left;
+    padding-left: 25px;
+  }
 }
 
 .wager-summary {
@@ -48,11 +54,14 @@
   @extend .col-md-6, .col-md-offset-3;
 }
 
+.wager-transaction {
+}
+
 .wager-input {
   @include box;
   @extend .col-xs-12;
   @extend .col-sm-8, .col-sm-offset-2;
-  @extend .col-md-6, .col-md-offset-3;
+  @extend .col-md-10, .col-md-offset-1;
 
   .left-column  { border-right: 1px solid rgba(0, 0, 0, 0.05); }
   .right-column { border-left: 1px solid rgba(0, 0, 0, 0.05); }
