@@ -28,6 +28,7 @@ gem 'stringex'
 gem 'simple_token_authentication'
 
 gem 'puma'
+gem 'brakeman'
 
 group :development do
   gem 'pry-byebug'

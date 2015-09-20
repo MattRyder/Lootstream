@@ -13,7 +13,12 @@ $(document).ready(function() {
       type: 'POST',
       url: '/place_bet',
       dataType: 'json',
-      data: { amount: amount_data, wager_option_id: this.name },
+      data: {
+        id: $(".wager").attr("data-wid"),
+        amount: amount_data,
+        wager_option_id: this.name,
+        channel_id: $("#player").attr("data-channel")
+      },
       success: function(data) {
         if(data.success) {
           $('#stream-balance a').html("Stream Balance: $"+data.new_balance);

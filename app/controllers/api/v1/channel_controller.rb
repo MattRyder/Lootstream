@@ -5,7 +5,7 @@ class API::V1::ChannelController < API::V1::ApiController
   # GET /channel
   # Returns the user's channel
   def show
-    render json: @user.channel.to_json(except: [:user_id, :slug])
+    respond_with @user.channel.to_json(except: [:user_id, :slug])
   end
 
 end

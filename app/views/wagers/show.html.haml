@@ -1,33 +1,18 @@
-.wager.wager-show{style: "margin-top: 50px;", class: "game-#{@wager.game.id}", data: { wid: @wager.id } }
+.wager.wager-show{style: "margin-top: 50px;", class: "game-#{@wager.game.id}" }
   .row
     .col-xs-12
       %h2.title= @wager.question
         
   .row.options
     - @wager.wager_options.each do |option|
-      .option
-        .btn.btn-wager-success.btn-lg{class: "#{'btn-wager-winner' if @wager.suspended? && @wager.winner == option}"}
-          = link_to option.text, "#", data: { id: "#{option.id}"}
+      .wager-option
+        - if @wager.suspended?
+          = link_to option.text, "#", class: "btn btn-wager-success btn-lg #{'btn-wager-winner' if @wager.suspended? && @wager.winner == option}", style: "background-color: #FFF"
+        - else
+          = button_to option.text, winner_channel_wager_path(@channel, @wager, option), class: "btn btn-wager-success btn-lg #{'btn-wager-winner' if @wager.suspended? && @wager.winner == option}", style: "background-color: #FFF"
         - if @wager.suspended?
           %h4
             %span.label.label-info
               = option.calculate_odds
 
   = link_to 'Back', channel_wagers_path(@wager.channel.name), class: 'btn btn-looted'
-
-- if !@wager.suspended?
-  :javascript
-    $('.btn').click(function() {
-      var sel_opt = $(this).find("a").data("id");
-      $.ajax({
-        url: '/distribute_winnings',
-        type: 'POST',
-        data: {'selected_option' : sel_opt }
-      }).complete(function(data) {
-        if(data.success)
-          location.reload(true);
-        else
-          $('.notice').text('Failed to set winner, please try again!');
-      });
-      return false;
-    });

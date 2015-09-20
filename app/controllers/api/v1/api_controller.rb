@@ -6,9 +6,8 @@ protected
 
   def authenticate
     authenticate_or_request_with_http_token do |token, opts|
-      @user = User.find_by(access_token: token) 
+      @user = User.find_by(api_key: token)
     end
-    @user
   end
 
 end

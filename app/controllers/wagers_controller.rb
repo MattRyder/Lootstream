@@ -1,6 +1,10 @@
 class WagersController < ApplicationController
-  before_action :set_channel, only: [:index, :create, :show, :active_wager]
-  before_action :set_wager, only: [:show, :edit, :update, :destroy]
+  before_action :set_channel, only: [
+    :index, :place_bet, :distribute_winnings, :create, :show, :active_wager]
+
+  before_action :set_wager, only: [
+    :show, :place_bet, :edit, :update, :destroy, :distribute_winnings
+  ]
 
   # GET /wagers
   # GET /wagers.json
@@ -10,24 +14,30 @@ class WagersController < ApplicationController
   end
 
   def place_bet
-    option = WagerOption.find(params[:wager_option_id])
-    result = option.wager.place_bet(params[:wager_option_id],
-      current_user, params[:amount])
+    result = { success: false, error_message: "Can't find that wager option!"}
+    option = @wager.wager_options.find(params[:wager_option_id])
+    if option.present?
+      result = @wager.place_bet(params[:wager_option_id], current_user, params[:amount])
+    end
     render json: result
   end
 
   def distribute_winnings
-    option = WagerOption.find(params[:selected_option])
-    status = option.wager.set_winner(option)
+    result = { success: false, error_message: "Can't find that wager option!"}
+    
+    option = @wager.wager_options.find(params[:wager_option_id])
+    if option.present?
+      result = { success: true, status: option.wager.set_winner(option) } 
+    end
 
     respond_to do |format|
-      format.json { render json: { success: true, status: status }}
+      format.html { redirect_to channel_wagers_path, notice: "Winner has been set, all bets have been paid out!"}
+      format.json { render json: result }
     end
   end
 
   def process_realtime
     response = {}
-    @wager = Wager.find(params[:wager_id]) unless params[:wager_id] == "0"
     
     if @wager.present?
       if @wager.active
@@ -103,7 +113,7 @@ class WagersController < ApplicationController
   def update
     respond_to do |format|
       if @wager.update(wager_params)
-        format.html { redirect_to @wager, notice: 'Wager was successfully updated.' }
+        format.html { redirect_to channel_wager_path(@channel, @wager), notice: 'Wager was successfully updated.' }
         format.json { render :show, status: :ok, location: @wager }
       else
         format.html { render :edit }

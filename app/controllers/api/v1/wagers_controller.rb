@@ -1,12 +1,12 @@
 class API::V1::WagersController < API::V1::ApiController
 
   before_filter :authenticate
+  before_action :set_wager
 
   # GET /channel/(/:id)/wager
   # Returns the channel's current wager
   def wager
-    wager = @user.channel.wager
-    render json: @user.channel.to_json(except: [:id])
+    render json: @wager.to_json(except: [:id])
   end
 
   # POST /channel/(/:id)/create_wager
@@ -33,7 +33,7 @@ class API::V1::WagersController < API::V1::ApiController
 
   # POST /set_winner
   def set_winner
-    option = WagerOption.find(params[:wager_option])
+    option = @wager.wager_options.find(params[:wager_option])
     if option.wager.channel == @user.channel
       message = option.wager.set_winner(option)
     else
@@ -50,7 +50,10 @@ private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_wager
-    @wager = Wager.find(params[:id])
+    @channel = @user.channel
+    return false if @channel.blank?
+
+    @wager = @channel.wagers.find(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

@@ -4,8 +4,8 @@
       = render 'channels/partials/bet_field', wager: @wager
       
 .row-ctr
-  #player
-    = render @player, channel: params[:id]
+  #player{data: {channel: @channel.name} }
+    = render @player, channel: @channel.slug
 
 .row-ctr
   #channel-info

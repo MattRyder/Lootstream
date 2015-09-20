@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   namespace :api, path: "", constraints: {subdomain: 'api'}, defaults: {format: 'json'} do
     namespace :v1 do
-      get '/channel'        => 'channel#channel'
+      get '/channel'        => 'channel#show'
       post '/create_wager'  => 'wagers#create_wager'
       post '/set_winner'    => 'wagers#set_winner'
     end
@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       get 'realtime'    => 'wagers#process_realtime', as: :realtime
       get 'render_form' => 'wagers#render_form',      as: :render_form, on: :collection
       post 'setup'      => 'wagers#new_wager_setup',  as: :setup,       on: :collection
+      post 'winner/:wager_option_id'     => 'wagers#distribute_winnings', as: :winner, on: :member
     end
 
     get  'active'       => 'channels#active_wager', as: :active
@@ -32,7 +33,6 @@ Rails.application.routes.draw do
   end
 
   # THESE NEED NESTING UNDER APPROPRIATE RESOURCES:
-  post '/distribute_winnings' => "wagers#distribute_winnings", as: :wager_distribute
   post '/place_bet' => 'wagers#place_bet', as: :place_bet
 
   resources :games do

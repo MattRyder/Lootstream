@@ -66,9 +66,9 @@ class ChannelsController < ApplicationController
     raise_404 if stream[:response] == 404
 
     # Load or save this channel:
-    @channel = Channel.find_by(slug: params[:id])
+    @channel = Channel.find_by(name: params[:id])
     @balance = current_user.channel_balance(@channel)
-    @wager = Wager.where(channel: @channel).last
+    @wager = @channel.wagers.last
     if request.env['HTTP_USER_AGENT'] && request.env['HTTP_USER_AGENT'] [/(Mobile\/.+Safari)|(AppleWebKit\/.+Mobile)/]
       @player = 'hls_player'
     else
