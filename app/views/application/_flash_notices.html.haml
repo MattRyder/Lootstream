@@ -4,7 +4,6 @@
       %span{"aria-hidden" => "true"}✖
     %strong Information
     %span= flash.now[:notice]
-    = notice
 - if flash.now[:alert].present?
   .alert.alert-dismissible.alert-danger{role: 'alert'}
     %button{type: 'alert', class: 'close', "data-dismiss" => "alert"}

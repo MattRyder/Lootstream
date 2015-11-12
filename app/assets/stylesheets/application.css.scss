@@ -48,6 +48,11 @@
     margin-bottom: 0;
     background-color: transparent;
 
+    .container-fluid {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
     .navbar-logo {
       @extend .navbar-brand;
       color: $ls-base;

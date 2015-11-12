@@ -59,6 +59,7 @@
   @include box;
   @extend .col-xs-8, .col-xs-offset-2;
   @extend .col-md-6, .col-md-offset-3;
+  margin-top: 50px;
 
   input {
     margin-top: 15px;

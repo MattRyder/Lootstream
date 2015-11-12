@@ -51,9 +51,29 @@
 }
 
 /* -- Show */
-#bet-field, #channel-info, #player {
+#bet-field {
   @extend .col-xs-10, .col-xs-offset-1;
   @extend .col-sm-8, .col-sm-offset-2;
+}
+
+#channel-container {
+  margin-top: 25px;
+}
+
+.left-row {
+  @extend .col-xs-12;
+  @extend .col-sm-8;
+}
+
+.left-row-only {
+  @extend .col-xs-10, .col-xs-offset-1;
+  @extend .col-sm-8, .col-sm-offset-2;
+}
+
+#right-row iframe {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 7px;
+  padding: 0;
 }
 
 #player-wrapper {

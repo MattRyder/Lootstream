@@ -11,5 +11,5 @@
       .col-xs-12.text-right
         = link_to "Clear Search", unset_search_channels_path, method: :post
 
-.col-sm-8#channel-list
+.col-sm-9#channel-list
   = render 'channels/partials/channel_field', streams: @streams, search_title: @search_title

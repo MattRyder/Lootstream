@@ -1,25 +1,51 @@
-- if @wager
-  .row-ctr
-    #bet-field
-      = render 'channels/partials/bet_field', wager: @wager
-      
-.row-ctr
-  #player{data: {channel: @channel.name} }
-    = render @player, channel: @channel.slug
+#channel-container
+  - if @wager
+    .row-ctr
+      #bet-field
+        = render 'channels/partials/bet_field', wager: @wager
 
-.row-ctr
-  #channel-info
+
+  #left-col.left-row-only
     .row
-      #ci-left
-        %i.fa.fa-gamepad
-        .game-name= @channel_data[:game]
-      #ci-right
-        %i.fa.fa-user
-          = " #{number_with_delimiter(@channel_data[:views], delimiter: ",")} Views"
+      #player{data: {channel: @channel.name} }
+        = render @player, channel: @channel.slug
+
     .row
-      .col-xs-12
-        %h3= @channel_data[:status]
+      #channel-info
+        .row
+          #ci-left
+            %i.fa.fa-gamepad
+            .game-name= @channel_data[:game]
+          #ci-right
+            %i.fa.fa-user
+              = " #{number_with_delimiter(@channel_data[:views], delimiter: ",")} Views"
+        .row
+          .col-xs-12
+            %h3= @channel_data[:status]
+
+        .row
+          .col-xs-12
+            = link_to "Toggle Chat", "#", class: "btn btn-looted pull-right", id: "toggle-chat"
+
+  #right-row.col-xs-4.hidden
+    .row
+      %iframe.col-xs-10.col-xs-offset-1{frameborder: "0", scrolling: "no", id: "chat_embed",  src:"http://www.twitch.tv/#{@channel.name}/chat", height: "560", width: "100%"}
+
 
 - if @wager.present? && current_user.present? 
   :javascript
     initIntervals("#{@wager.id if @wager}", "#{current_user.id}", "#{params[:id]}");
+
+:javascript
+  $("#toggle-chat").on("click", function(e) {
+    e.preventDefault();
+    if($("#left-col").hasClass("left-row-only")) {
+      $("#left-col").removeClass("left-row-only");
+      $("#left-col").addClass("left-row");
+      $("#right-row").removeClass("hidden");
+    } else {
+      $("#left-col").removeClass("left-row");
+      $("#left-col").addClass("left-row-only");
+      $("#right-row").addClass("hidden");
+    }
+  })
