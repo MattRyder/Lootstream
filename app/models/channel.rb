@@ -7,7 +7,7 @@ class Channel < ActiveRecord::Base
 
   def self.parse_channels(streams)
     stream_data = []
-    streams.each_with_index do |stream, i|
+    streams.to_a.each_with_index do |stream, i|
       channel = stream['channel']
       stream_data[i] = { 
         display_name: channel['display_name'],
